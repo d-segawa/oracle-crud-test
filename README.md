@@ -3,7 +3,7 @@
 テーブルのINSERT、UPDATE、DELETEの履歴をHTMLファイルに出力する
 #### 履歴出力イメージ
 
-![出力イメージ](https://github.com/d-segawa/crud-test/blob/images/image/result.png)
+![出力イメージ](https://github.com/d-segawa/oracle-crud-test/blob/images/image/result.png)
 
 ## 環境
 - Java SE8+
@@ -23,7 +23,7 @@ set DB_PASS=pass
 ```
 - start.batをダブルクリックする
 
-![起動画面](https://github.com/d-segawa/crud-test/blob/images/image/gui.png)
+![起動画面](https://github.com/d-segawa/oracle-crud-test/blob/images/image/gui.png)
 
 - Create triggerボタン・・・テキストに入力したテーブルに対して、トリガーを作成する
 - Print dataボタン・・・ドロップボックスで選択したテーブルの履歴をHTMLに出力する
