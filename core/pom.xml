@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>core</artifactId>
+
+    <parent>
+        <groupId>org.crudtest</groupId>
+        <artifactId>crud-test</artifactId>
+        <version>0.0.9</version>
+    </parent>
+
+    <properties>
+        <junit.jupiter.version>5.4.2</junit.jupiter.version>
+        <junit-platform-launcher.version>1.4.2</junit-platform-launcher.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>oracle.jdbc.OracleDriver</groupId>
+            <artifactId>oracle.driver</artifactId>
+            <version>1.0.0</version>
+            <systemPath>${project.basedir}/oracle/ojdbc7.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit-platform-launcher.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>
