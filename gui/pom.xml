@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>org.crudtest</groupId>
-        <artifactId>crud-test</artifactId>
+        <artifactId>oracle-crud-test</artifactId>
         <version>0.0.9</version>
     </parent>
 
