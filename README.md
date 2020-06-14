@@ -11,7 +11,7 @@
 
 ## 使い方
 https://github.com/d-segawa/oracle-crud-test/releases
-- Assets -> crud-test.zipをダウンロード
+- Assets -> crud-test.zipをダウンロード・解凍
 
 
 - start.batを環境に合わせて変更する
