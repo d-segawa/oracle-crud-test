@@ -30,8 +30,8 @@ set DB_PASS=pass
 ![起動画面](https://github.com/d-segawa/oracle-crud-test/blob/images/image/gui.png)
 
 * テキストボックスにテーブル名を入力し「Create trigger」ボタンを押す
-* ApplicationからINSERT・UPDATE・DELETEを実行
-* 「Print data」ボタンを押してHTMLファイルを出力する
+* ApplicationからINSERT/UPDATE/DELETEを実行
+* 「Print data」ボタンを押して履歴をHTMLファイルを出力する
 
 #### ボタンの説明
 - Create triggerボタン・・・テキストに入力したテーブルに対して、トリガーを作成する
