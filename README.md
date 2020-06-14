@@ -38,5 +38,5 @@ set DB_PASS=pass
 - XXX_CRUD_LOG_T・・・履歴保存用テーブル
 - XXX_CRUD_TRIGGER_MNG_T・・・トリガー管理テーブル
 
-Oracleシーケンス
+シーケンス
 - XXX_CRUD_LOG_SEQ・・・管理テーブルのPK用シーケンス
