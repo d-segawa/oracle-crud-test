@@ -30,7 +30,10 @@ set DB_PASS=pass
 - Delete all dataボタン・・・履歴データを全てTruncateする
 - Delete all triggerボタン・・・作成したトリガーを全てDropする
 
-## トリガーを作成すると作られるOracleオブジェクト
+## 作成されるOracleオブジェクト
+トリガー
+- XXX_{テーブル名}
+
 テーブル
 - XXX_CRUD_LOG_T・・・履歴保存用テーブル
 - XXX_CRUD_TRIGGER_MNG_T・・・トリガー管理テーブル
