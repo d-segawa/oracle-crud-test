@@ -22,7 +22,7 @@ public class CrudTestService {
 
     final OracleMetaDataCreator oracleMetaDataCreator;
 
-    public static final String SCHEMA = ApplicationProperties.DB_USER.getValue();
+    public static final String SCHEMA = ApplicationProperties.DB_USER.getValue().toUpperCase();
 
     public static final String LOG_TABLE_NAME = ApplicationProperties.LOG_TABLE_NAME.getValue();
 
