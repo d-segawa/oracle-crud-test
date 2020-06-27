@@ -1,13 +1,16 @@
 package org.crudtest.util;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.crudtest.exception.FileIOException;
@@ -40,5 +43,20 @@ public class IOUtil {
         } catch (IOException ie) {
             throw new FileIOException(ie);
         }
+    }
+
+    public static List<String> readTemplateAllLine(String templateName) throws FileIOException {
+        List<String> line = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(ClassLoader.getSystemResourceAsStream(templateName), StandardCharsets.UTF_8))) {
+
+            for (String l; (l = br.readLine()) != null;) {
+                line.add(l);
+            }
+        } catch (IOException ie) {
+            throw new FileIOException(ie);
+        }
+        return line;
     }
 }

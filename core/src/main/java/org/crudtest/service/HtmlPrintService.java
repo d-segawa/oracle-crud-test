@@ -32,8 +32,7 @@ public class HtmlPrintService {
             List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
             List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
 
-            Path path = IOUtil.getTemplatePath("template.html");
-            List<String> lines = IOUtil.readAllLine(path);
+            List<String> lines = IOUtil.readTemplateAllLine("template.html");
 
             String thead1 = createTHeadFirst(recoredList);
             String thead2 = createTHeadSecond(recoredList);
