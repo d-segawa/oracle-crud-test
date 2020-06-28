@@ -31,7 +31,7 @@ set DB_CHARSET=SJIS
 ![起動画面](https://github.com/d-segawa/oracle-crud-test/blob/images/image/gui.png)
 
 * テキストボックスにテーブル名を入力し「Create trigger」ボタンを押す
-* ApplicationからINSERT/UPDATE/DELETEを実行
+* テスト対象のApplicationからINSERT/UPDATE/DELETEを実行
 * 「Print data」ボタンを押して履歴をHTMLファイルを出力する
 
 #### ボタンの説明
