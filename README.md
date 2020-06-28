@@ -23,6 +23,7 @@ set JAVA_HOME="C:\java"
 set DB_URL=jdbc:oracle:thin:@//192.168.0.1:1521/test
 set DB_USER=user
 set DB_PASS=pass
+set DB_CHARSET=SJIS
 
 ```
 - start.batをダブルクリックする
