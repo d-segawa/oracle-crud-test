@@ -1,5 +1,6 @@
 package org.crudtest.service.logic;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.crudtest.log.AppLogger;
+import org.crudtest.properties.ApplicationProperties;
 import org.crudtest.repository.entity.LogTable;
 import org.crudtest.service.bean.LogRecoredBean;
 import org.crudtest.service.bean.LogRecoredBean.Data;
@@ -45,7 +47,11 @@ public class DataConverter {
         if (value == null || value.length() == 0) {
             return null;
         }
-        byte[] byteArr = Base64.getDecoder().decode(value.getBytes(StandardCharsets.UTF_8));
+        byte[] byteArr = Base64.getDecoder().decode(value.getBytes(dbCharSet()));
         return new String(byteArr, StandardCharsets.UTF_8);
+    }
+
+    Charset dbCharSet() {
+        return Charset.forName(ApplicationProperties.DB_CHARSET.getValue());
     }
 }

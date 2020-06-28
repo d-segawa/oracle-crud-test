@@ -18,6 +18,7 @@ public class OracleConnectionManager implements ConnectionManager {
                     ApplicationProperties.DB_URL.getValue());
             dataSource.setUser(ApplicationProperties.DB_USER.getValue());
             dataSource.setPassword(ApplicationProperties.DB_PASS.getValue());
+
             return dataSource.getConnection();
         } catch (SQLException se) {
             throw new JdbcException(se);

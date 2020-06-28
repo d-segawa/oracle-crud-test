@@ -6,7 +6,7 @@ public enum ApplicationProperties {
             "trigger.name.prifix"), DB_URL("database.url"), DB_USER(
                     "database.user"), DB_PASS(
                             "database.pass"), MANAGE_TABLE_NAME(
-                                    "manage.table.name"), LOG_PATH("logfile.path"), LOG_LEVEL("log.level");
+                                    "manage.table.name"), LOG_PATH("logfile.path"), LOG_LEVEL("log.level"),DB_CHARSET("database.charset");
 
     private String name;
 

@@ -4,6 +4,7 @@ set JAVA_HOME="C:\java"
 set DB_URL=jdbc:oracle:thin:@//192.168.0.1:1521/test
 set DB_USER=user
 set DB_PASS=pass
+set DB_CHARSET=SJIS
 
 
 set JAVA_OPTS=-Xms32M -Xmx64M
@@ -18,6 +19,7 @@ set JAR3=gui-1.0.0.jar
 set OPTS=-Ddatabase.url=%DB_URL%^
  -Ddatabase.user=%DB_USER%^
  -Ddatabase.pass=%DB_PASS%^
+ -Ddatabase.charset=%DB_CHARSET%^
  -Dlogfile.path=%LOG_FILE%^
  -Dlog.level=%LOG_LEVEL%
 
