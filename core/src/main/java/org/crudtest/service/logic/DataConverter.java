@@ -1,7 +1,6 @@
 package org.crudtest.service.logic;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -48,7 +47,7 @@ public class DataConverter {
             return null;
         }
         byte[] byteArr = Base64.getDecoder().decode(value.getBytes(dbCharSet()));
-        return new String(byteArr, StandardCharsets.UTF_8);
+        return new String(byteArr, dbCharSet());
     }
 
     Charset dbCharSet() {
