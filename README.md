@@ -11,10 +11,10 @@
 
 ## 使い方
 [リリース](https://github.com/d-segawa/oracle-crud-test/releases)
-- Assets -> crud-test.zipをダウンロード・解凍
+1. Assets -> crud-test.zipをダウンロード・解凍
 
 
-- start.batを環境に合わせて変更する
+2. start.batを環境に合わせて変更する
 
 ```
 @echo off
@@ -26,13 +26,13 @@ set DB_PASS=pass
 set DB_CHARSET=SJIS
 
 ```
-- start.batをダブルクリックする
+3. start.batをダブルクリックする
 
 ![起動画面](https://github.com/d-segawa/oracle-crud-test/blob/images/image/gui.png)
 
-* テキストボックスにテーブル名を入力し「Create trigger」ボタンを押す
-* テスト対象のApplicationからINSERT/UPDATE/DELETEを実行
-* 「Print data」ボタンを押して履歴をHTMLファイルを出力する
+4. テキストボックスにテーブル名を入力し「Create trigger」ボタンを押す
+5. テスト対象のApplicationからINSERT/UPDATE/DELETEを実行
+6. 「Print data」ボタンを押して履歴をHTMLファイルを出力する
 
 #### ボタンの説明
 - Create triggerボタン・・・テキストに入力したテーブルに対して、トリガーを作成する
