@@ -27,18 +27,8 @@ set DB_CHARSET=SJIS
 
 ![起動画面](https://github.com/d-segawa/oracle-crud-test/blob/images/image/gui.png)
 
-- Create triggerボタン・・・テキストに入力したテーブルのトリガーを作成
+- Create triggerボタン・・・テキストに入力したテーブルのトリガーと管理用オブジェクトを作成
 - Print dataボタン・・・選択したテーブルの履歴をファイルに出力
 - Delete all dataボタン・・・全テーブルの履歴を削除
 - Delete all triggerボタン・・・全てのトリガーを削除
 
-## 作成されるOracleオブジェクト
-トリガー
-- XXX_{テーブル名}
-
-テーブル
-- XXX_CRUD_LOG_T・・・履歴保存用テーブル
-- XXX_CRUD_TRIGGER_MNG_T・・・トリガー管理テーブル
-
-シーケンス
-- XXX_CRUD_LOG_SEQ・・・管理テーブルのPK用シーケンス
