@@ -32,4 +32,5 @@ set DB_CHARSET=SJIS
 - Delete all dataボタン・・・全テーブルの履歴を削除
 - Delete all triggerボタン・・・全てのトリガーを削除
 
-![オブジェクト](https://github.com/d-segawa/oracle-crud-test/blob/images/image/object.png)
+## オブジェクト
+<img src="https://github.com/d-segawa/oracle-crud-test/blob/images/image/object.png" width=60% />
