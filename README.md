@@ -1,9 +1,6 @@
 # oracle-crud-test
 
-テーブルのINSERT、UPDATE、DELETEの履歴をHTMLファイルに出力する
-#### 履歴出力イメージ
-
-![出力イメージ](https://github.com/d-segawa/oracle-crud-test/blob/images/image/result.png)
+テーブルのINSERT、UPDATE、DELETEの履歴をファイルに出力
 
 ## 環境
 - Java SE8+
@@ -11,10 +8,10 @@
 
 ## 使い方
 [リリース](https://github.com/d-segawa/oracle-crud-test/releases)
-1. Assets -> crud-test.zipをダウンロード・解凍
+- Assets -> crud-test.zipをダウンロード・解凍
 
 
-2. start.batを環境に合わせて変更する
+- start.batを環境に合わせて変更
 
 ```
 @echo off
@@ -26,19 +23,14 @@ set DB_PASS=pass
 set DB_CHARSET=SJIS
 
 ```
-3. start.batをダブルクリックする
+- start.batを実行
 
 ![起動画面](https://github.com/d-segawa/oracle-crud-test/blob/images/image/gui.png)
 
-4. テキストボックスにテーブル名を入力し「Create trigger」ボタンを押す
-5. テスト対象のApplicationからINSERT/UPDATE/DELETEを実行
-6. 「Print data」ボタンを押して履歴をHTMLファイルを出力する
-
-#### ボタンの説明
-- Create triggerボタン・・・テキストに入力したテーブルに対して、トリガーを作成する
-- Print dataボタン・・・ドロップボックスで選択したテーブルの履歴をHTMLに出力する
-- Delete all dataボタン・・・履歴データを全てTruncateする
-- Delete all triggerボタン・・・作成したトリガーを全てDropする
+- Create triggerボタン・・・テキストに入力したテーブルのトリガーを作成する
+- Print dataボタン・・・選択したテーブルの履歴をファイルに出力する
+- Delete all dataボタン・・・全テーブルの履歴を削除する
+- Delete all triggerボタン・・・全てのトリガーを削除する
 
 ## 作成されるOracleオブジェクト
 トリガー
