@@ -33,4 +33,4 @@ set DB_CHARSET=SJIS
 - Delete all triggerボタン・・・全てのトリガーを削除
 
 ## オブジェクト
-<img src="https://github.com/d-segawa/oracle-crud-test/blob/images/image/object.png" width=60% />
+<img src="https://github.com/d-segawa/oracle-crud-test/blob/images/image/object.png" width=80% />
