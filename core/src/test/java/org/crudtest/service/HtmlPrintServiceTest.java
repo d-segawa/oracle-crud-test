@@ -13,7 +13,7 @@ class HtmlPrintServiceTest {
         Path path = Paths.get("/Applications/Eclipse_4.7.2.app/Contents/workspace/crud-test/src/main/resources",
                 "sample_result.html");
 
-        service.print("TRANSACTION", path);
+//        service.print("TRANSACTION", path);
     }
 
 }

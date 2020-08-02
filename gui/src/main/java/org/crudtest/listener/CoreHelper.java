@@ -43,8 +43,8 @@ public class CoreHelper {
         return new Result(true, "");
     }
 
-    public static void printHtml(String targetTableName, Path filePath) {
-        htmlPrintService.print(targetTableName, filePath);
+    public static void printHtml(List<String> targetTableName, Path filePath) {
+        htmlPrintService.printMultiTable(targetTableName, filePath);
     }
 
     public static class Result {

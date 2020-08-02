@@ -6,6 +6,7 @@ import java.awt.FileDialog;
 import java.awt.Label;
 import java.awt.TextField;
 
+import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
 import org.crudtest.frame.DeleteAllTriggerDialog;
 import org.crudtest.frame.DeleteLogDialog;
@@ -27,7 +28,7 @@ public class LocateCompornent {
         CrudTestFrame.addCompornent(t1, LayoutHelper.createGridBagConstraints(1, 0, 1, 1), CompornentName.TEXT1);
 
         // Create trigger button
-        Button b1 = new Button("Create trigger");
+        Button b1 = new Button("Create");
         CrudTestFrame.addCompornent(b1, LayoutHelper.createGridBagConstraints(1, 1, 1, 1),
                 CompornentName.CREATE_TRIGGER_BUTTON);
 
@@ -37,17 +38,17 @@ public class LocateCompornent {
         CrudTestFrame.addCompornent(c1, LayoutHelper.createGridBagConstraints(2, 0, 1, 1), CompornentName.CHOICE1);
 
         // prit data button
-        Button b2 = new Button("Print data");
+        Button b2 = new Button("Print");
         CrudTestFrame.addCompornent(b2, LayoutHelper.createGridBagConstraints(2, 1, 1, 1),
                 CompornentName.OUTPUT_LOG_BUTTON);
 
         // delete all data button
-        Button b3 = new Button("Delete all data");
+        Button b3 = new Button("Clear");
         CrudTestFrame.addCompornent(b3, LayoutHelper.createGridBagConstraints(3, 0, 1, 1),
                 CompornentName.DELETE_ALL_LOG_BUTTON);
 
         // print button
-        Button b4 = new Button("Delete all trigger");
+        Button b4 = new Button("Drop");
         CrudTestFrame.addCompornent(b4, LayoutHelper.createGridBagConstraints(3, 1, 1, 1),
                 CompornentName.DELETE_ALL_TRIGER_BUTTON);
 
@@ -68,6 +69,13 @@ public class LocateCompornent {
         // print file dialog
         FileDialog fd = new FileDialog(CrudTestFrame.getFrame(), "出力ファイル選択", FileDialog.SAVE);
         CrudTestFrame.addSubWindow(fd, CompornentName.FILE_OUTPUT_DIALOG);
+
+        // create trigger dialog
+        CreateTriggerDialog cdl = new CreateTriggerDialog(CrudTestFrame.getFrame(), l1, t1,c1);
+        cdl.setTitle("Dialog");
+        cdl.setSize(350, 150);
+        cdl.setLocationRelativeTo(CrudTestFrame.getFrame());
+        CrudTestFrame.addSubWindow(cdl, CompornentName.CREATE_TRIGGER_BUTTON);
 
     }
 }

@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OutPutHtmlListener implements ActionListener {
 
@@ -31,7 +33,13 @@ public class OutPutHtmlListener implements ActionListener {
         try {
             if (validate(choice, fileDialog, label)) {
                 Path filePath = Paths.get(fileDialog.getDirectory(), fileDialog.getFile());
-                CoreHelper.printHtml(choice.getSelectedItem(), filePath);
+
+                int count = choice.getItemCount();
+                List<String> items = new ArrayList<>();
+                for (int i = 0; i < count; i++) {
+                    items.add(choice.getItem(i));
+                }
+                CoreHelper.printHtml(items, filePath);
             }
         } catch (Exception ex) {
             label.setText(ex.getMessage());
@@ -40,11 +48,11 @@ public class OutPutHtmlListener implements ActionListener {
 
     boolean validate(Choice choice, FileDialog fileDialog, Label label) {
         if (choice.getSelectedItem() == null || choice.getSelectedItem().isEmpty()) {
-            label.setText("テーブルを選択してください。");
+            label.setText("トリガーがありません。");
             return false;
         }
 
-        String fileName = String.format("%s_%s.html", choice.getSelectedItem().toUpperCase(), formattedSysDate());
+        String fileName = String.format("%s_%s.html", "CRUD", formattedSysDate());
         fileDialog.setFile(fileName);
         fileDialog.setVisible(true);
 
@@ -57,7 +65,7 @@ public class OutPutHtmlListener implements ActionListener {
     }
 
     String formattedSysDate() {
-        return DateTimeFormatter.ofPattern("uuuuMMddHHmmss").format(LocalDateTime.now());
+        return DateTimeFormatter.ofPattern("uuuuMMdd_HHmmss").format(LocalDateTime.now());
     }
 
 }

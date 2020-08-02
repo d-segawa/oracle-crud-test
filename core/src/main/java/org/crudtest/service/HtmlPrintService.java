@@ -1,9 +1,12 @@
 package org.crudtest.service;
 
+import java.io.BufferedWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.crudtest.exception.CrudTestException;
 import org.crudtest.log.AppLogger;
 import org.crudtest.properties.ApplicationProperties;
 import org.crudtest.repository.OracleRepository;
@@ -27,28 +30,51 @@ public class HtmlPrintService {
         this.converter = new DataConverter();
     }
 
-    public void print(String targetTableName, Path filePath) {
+    public void printMultiTable(List<String> tableList, Path filePath) {
+        List<String> lines = new ArrayList<>();
+
         try {
-            List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
-            List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
+            for (String table : tableList) {
+                lines.addAll(print(table));
+            }
 
-            List<String> lines = IOUtil.readTemplateAllLine("template.html");
+            List<String> templateLines = IOUtil.readTemplateAllLine("template.html");
 
-            String thead1 = createTHeadFirst(recoredList);
-            String thead2 = createTHeadSecond(recoredList);
-            String tbody = createTBody(recoredList);
-
-            // replace
-            lines.replaceAll(line -> {
-                return line.replace("${TABLE_NAME}", targetTableName).replace("${THEAD1}", thead1)
-                        .replace("${THEAD2}", thead2)
-                        .replace("${TBODY}", tbody);
-            });
-
-            IOUtil.writeFile(filePath, lines);
+            try (BufferedWriter bw = Files.newBufferedWriter(filePath)) {
+                for (String tLine : templateLines) {
+                    if (tLine.contains("${BODY_DATA}")) {
+                        for (String tableLine : lines) {
+                            bw.write(tableLine);
+                            bw.newLine();
+                        }
+                    } else {
+                        bw.write(tLine);
+                        bw.newLine();
+                    }
+                }
+            }
         } catch (Exception e) {
             log.error("Error occured print html.", e);
         }
+    }
+
+    List<String> print(String targetTableName) throws CrudTestException {
+        List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
+        List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
+
+        List<String> lines = IOUtil.readTemplateAllLine("table-template.html");
+
+        String thead1 = createTHeadFirst(recoredList);
+        String thead2 = createTHeadSecond(recoredList);
+        String tbody = createTBody(recoredList);
+
+        // replace
+        lines.replaceAll(line -> {
+            return line.replace("${TABLE_NAME}", targetTableName).replace("${THEAD1}", thead1)
+                    .replace("${THEAD2}", thead2)
+                    .replace("${TBODY}", tbody);
+        });
+        return lines;
     }
 
     String createTHeadFirst(List<LogRecoredBean> recoredList) {
@@ -133,7 +159,7 @@ public class HtmlPrintService {
                 }
 
                 //                data.append("<pre>");
-                data.append(escapeHtml(rec.getDataList().get(i).getValue()));
+                data.append(decorateNull(escapeHtml(rec.getDataList().get(i).getValue())));
                 //                data.append("</pre>");
                 data.append("</td>");
             }
@@ -143,8 +169,19 @@ public class HtmlPrintService {
         return dataList;
     }
 
+    String decorateNull(String value) {
+        if ("&lt;NULL&gt;".equals(value)) {
+            return "<code>" + value + "</code>";
+        }
+        return value;
+    }
+
+    boolean isEmpty(String value) {
+        return value == null || value.length() <= 0;
+    }
+
     String escapeHtml(String value) {
-        if (value == null || value.length() == 0) {
+        if (isEmpty(value)) {
             return value;
         }
         StringBuffer sb = new StringBuffer();

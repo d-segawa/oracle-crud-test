@@ -5,10 +5,10 @@ import java.awt.FileDialog;
 import java.awt.Label;
 import java.awt.TextField;
 
+import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
 import org.crudtest.frame.DeleteAllTriggerDialog;
 import org.crudtest.frame.DeleteLogDialog;
-import org.crudtest.listener.CreateTriggerListener;
 import org.crudtest.listener.CoreHelper;
 import org.crudtest.listener.OutPutHtmlListener;
 
@@ -18,10 +18,23 @@ public class AssociateEvent {
         TextField t1 = CrudTestFrame.getComponent(CompornentName.TEXT1, TextField.class);
         Label l1 = CrudTestFrame.getComponent(CompornentName.LABEL1, Label.class);
         Choice c1 = CrudTestFrame.getComponent(CompornentName.CHOICE1, Choice.class);
-        CreateTriggerListener ctl = new CreateTriggerListener(t1, l1,
-                () -> CoreHelper.renewChoice(c1));
 
-        CrudTestFrame.setListener(CompornentName.CREATE_TRIGGER_BUTTON, ctl);
+        // トリガー作成
+        CreateTriggerDialog createTriggerDialog = CrudTestFrame.getSubwindow(
+                CompornentName.CREATE_TRIGGER_BUTTON,
+                CreateTriggerDialog.class);
+
+        CrudTestFrame.setListener(CompornentName.CREATE_TRIGGER_BUTTON, e -> {
+            if (t1.getText() == null || t1.getText().length() <= 0) {
+                l1.setText("テーブルを入力してください");
+            } else {
+                if (c1.getItemCount() <= 0) {
+                    createTriggerDialog.setVisible(true);
+                } else {
+                    createTrigger(l1, t1, c1);
+                }
+            }
+        });
 
         //
         FileDialog fd = CrudTestFrame.getSubwindow(CompornentName.FILE_OUTPUT_DIALOG, FileDialog.class);
@@ -51,4 +64,16 @@ public class AssociateEvent {
 
     }
 
+    void createTrigger(Label label, TextField textField, Choice c1) {
+        label.setText("");
+
+        String text = textField.getText();
+        org.crudtest.listener.CoreHelper.Result result = CoreHelper.createTrigger(text);
+        if (result.result) {
+        } else {
+            label.setText(result.errorMessage);
+        }
+
+        CoreHelper.renewChoice(c1);
+    }
 }

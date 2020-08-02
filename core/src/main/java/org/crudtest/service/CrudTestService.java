@@ -39,7 +39,7 @@ public class CrudTestService {
 
     public String create(String tableName) {
         if (tableName == null || tableName.length() == 0) {
-            return "テーブル名が空です";
+            return "テーブル名を入力してください";
         }
 
         try {

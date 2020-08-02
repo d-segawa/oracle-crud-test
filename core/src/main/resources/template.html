@@ -11,27 +11,28 @@
 table thead {
     background-color: #DDDDDD;
 }
-
 .column-green {
     background-color: #DDDDDD;
 }
-
 .diff-color {
     background-color: #dffabd;
 }
+
+.table-fixed th:first-child, td:first-child {
+  position: sticky;  position: -webkit-sticky;
+  left: 0;
+}
+
+/*
+.text-nowrap { white-space: nowrap !important; }
+.table-responsive {
+  display: block;  width: 100%;
+  overflow-x auto;  --webkit-overflow-scrolling: touch;
+}
+*/
 </style>
 </head>
 <body>
-    <p>${TABLE_NAME}</p>
-    <table border="1">
-        <thead>
-            <tr>${THEAD1}
-            </tr>
-            <tr>${THEAD2}
-            </tr>
-        </thead>
-        <tbody>${TBODY}
-        </tbody>
-    </table>
+${BODY_DATA}
 </body>
 </html>

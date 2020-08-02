@@ -13,7 +13,7 @@ public class DeleteAllTriggerDialog extends java.awt.Dialog {
         super(owner, true);
 
         Label l2 = new Label();
-        l2.setText("triggerを全て削除しますか？");
+        l2.setText("トリガーを全て削除しますか？");
 
         //Button
         Button b1 = new Button("Ok");
