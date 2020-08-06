@@ -25,6 +25,7 @@ public class CreateTriggerDialog extends java.awt.Dialog {
 
         // action listner
         b1.addActionListener(e -> {
+            l1.setText("");
             String text = textField.getText();
             org.crudtest.listener.CoreHelper.Result result = CoreHelper.createTrigger(text);
             if (result.result) {
