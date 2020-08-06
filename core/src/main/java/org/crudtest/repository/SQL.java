@@ -4,7 +4,7 @@ public class SQL {
 
     public static final String countTable_sql = "SELECT COUNT(*) FROM USER_TABLES WHERE TABLE_NAME = ?";
 
-    public static final String selectLog_sql = "SELECT ID, CRUD_TYPE, HISTORY_TYPE, TABLE_NAME, DATA, INSERT_DATE FROM %1$s WHERE TABLE_NAME = ? ORDER BY ID";
+    public static final String selectLog_sql = "SELECT ID, CRUD_TYPE, HISTORY_TYPE, TABLE_NAME, DATA, INSERT_DATE FROM %1$s WHERE TABLE_NAME = ? AND RECODE_TYPE = '0' ORDER BY ID";
 
     public static final String deleteLog_sql = "DELETE FROM %1$s WHERE TABLE_NAME = ?";
 

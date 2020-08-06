@@ -10,7 +10,11 @@ public class OracleTriggerCreator {
 
     private static final String HEADER = "CREATE OR REPLACE TRIGGER %1$s AFTER INSERT OR UPDATE OR DELETE ON %2$s FOR EACH ROW";
 
-    private static final String INSERT_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE) VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), '%3$s', '%4$s','%5$s', %6$s, SYSDATE);";
+    private static final String INSERT_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE) VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), '%3$s', '%4$s','%5$s', %6$s, SYSDATE, '0');";
+
+    private static final String INSERT_ERROR_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,ERROR_INFO) VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), '%3$s', '%4$s','%5$s', '%6$s', SYSDATE, '1',%7$s);";
+
+    private static final String EXCEPTION = " EXCEPTION WHEN OTHERS THEN ";
 
     private static final String INSERT_VALUES = " '%1$s:' || UTL_RAW.CAST_TO_VARCHAR2(UTL_ENCODE.BASE64_ENCODE(UTL_I18N.STRING_TO_RAW(NVL(%2$s, '<NULL>'))))";
 
@@ -19,6 +23,8 @@ public class OracleTriggerCreator {
     private static final String UPDATING = " IF UPDATING THEN %1$s %2$s END IF;";
 
     private static final String DELETING = " IF DELETING THEN %1$s END IF;";
+
+    private static final String LS = System.lineSeparator();
 
     final String triggerName;
 
@@ -33,10 +39,17 @@ public class OracleTriggerCreator {
         validate(tableInfo);
         StringBuilder sb = new StringBuilder();
         sb.append(createHeader(tableInfo.getTableName(), triggerName));
+        sb.append(LS);
         sb.append(" BEGIN ");
+        sb.append(LS);
         sb.append(createInserting(tableInfo));
+        sb.append(LS);
         sb.append(createUpdating(tableInfo));
+        sb.append(LS);
         sb.append(createDeleting(tableInfo));
+        sb.append(LS);
+        sb.append(createException(tableInfo));
+        sb.append(LS);
         sb.append(" END;");
         return sb.toString();
     }
@@ -84,11 +97,22 @@ public class OracleTriggerCreator {
         return String.format(DELETING, insertOldValueSql);
     }
 
+    String createException(MetaTableInfo tableInfo) {
+        String insertErrorSql = String.format(INSERT_ERROR_SQL, logTableName,
+                ApplicationProperties.LOG_SEQ_NAME.getValue(),
+                tableInfo.getTableName(), "******", "***",
+                "******","DBMS_UTILITY.FORMAT_ERROR_STACK");
+
+        return EXCEPTION + insertErrorSql;
+    }
+
+
     String createNewInsertValues(MetaTableInfo ti) {
 
         StringBuilder statement = ti.getColumnList().stream().collect(() -> new StringBuilder(), (sb, column) -> {
             if (sb.length() > 0) {
                 sb.append(" ||','|| ");
+                sb.append(LS);
             }
             sb.append(String.format(INSERT_VALUES, column.getColumnName(), createNewValue(column)));
         }, (sb1, sb2) -> {
@@ -102,6 +126,7 @@ public class OracleTriggerCreator {
         StringBuilder statement = ti.getColumnList().stream().collect(() -> new StringBuilder(), (sb, column) -> {
             if (sb.length() > 0) {
                 sb.append(" ||','|| ");
+                sb.append(LS);
             }
             sb.append(String.format(INSERT_VALUES, column.getColumnName(), createOldValue(column)));
         }, (sb1, sb2) -> {
