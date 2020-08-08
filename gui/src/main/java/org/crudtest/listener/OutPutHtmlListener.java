@@ -34,7 +34,9 @@ public class OutPutHtmlListener implements ActionListener {
             if (validate(choice, fileDialog, label)) {
                 Path filePath = Paths.get(fileDialog.getDirectory(), fileDialog.getFile());
 
-                CoreHelper.printHtml(getItemList(), filePath);
+                List<String> tableList = getItemList();
+                CoreHelper.printHtml(tableList, filePath);
+                CoreHelper.deleteData(tableList);
             }
         } catch (Exception ex) {
             label.setText(ex.getMessage());

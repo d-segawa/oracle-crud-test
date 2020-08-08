@@ -28,6 +28,12 @@ public class CoreHelper {
         return htmlPrintService.countData(tableList);
     }
 
+    public static void deleteData(List<String> tableList) {
+        for (String tableName : tableList) {
+            crudTestService.deleteLogsTable(tableName);
+        }
+    }
+
     public static void truncateLogTable() {
         if (crudTestService.existsLogTable()) {
             crudTestService.truncateLogTable();

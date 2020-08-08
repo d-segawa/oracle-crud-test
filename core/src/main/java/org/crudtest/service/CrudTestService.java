@@ -160,6 +160,15 @@ public class CrudTestService {
         }
     }
 
+    public int deleteLogsTable(String tableName) {
+        try {
+            return oracleRepository.deleteLog(LOG_TABLE_NAME, tableName);
+        } catch (JdbcException e) {
+            log.error("Error occured drop db object", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void createTrigger(String tableName) throws JdbcException {
 
         MetaTableInfo metaTableInfo = DbUtil.getMetaData(
