@@ -59,6 +59,21 @@ public class HtmlPrintService {
         }
     }
 
+    public int countData(List<String> tableList) {
+        try {
+            int count = 0;
+            if (repo.existsTable(LOGS_TABLE_NAME)) {
+                for (String targetTableName : tableList) {
+                    count += repo.selectLog(LOGS_TABLE_NAME, targetTableName).size();
+                }
+            }
+            return count;
+        } catch (CrudTestException e) {
+            log.error("Error occured print html count data.", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     List<String> createListData(List<String> targetTableNameList) throws CrudTestException {
         List<String> listData = new ArrayList<String>();
         listData.add("<ul class=\"nav nav-tabs\">");

@@ -8,7 +8,7 @@ import java.awt.TextField;
 
 import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
-import org.crudtest.frame.DeleteAllTriggerDialog;
+import org.crudtest.frame.DeleteAllObjectDialog;
 import org.crudtest.frame.DeleteLogDialog;
 import org.crudtest.frame.LayoutHelper;
 import org.crudtest.listener.CoreHelper;
@@ -59,12 +59,12 @@ public class LocateCompornent {
         dl.setLocationRelativeTo(CrudTestFrame.getFrame());
         CrudTestFrame.addSubWindow(dl, CompornentName.DELETE_CONFIRM_DIALOG);
 
-        // drop all triger dialog
-        DeleteAllTriggerDialog deleteAllTriggerDialog = new DeleteAllTriggerDialog(CrudTestFrame.getFrame(), l1, c1);
-        deleteAllTriggerDialog.setTitle("Dialog");
-        deleteAllTriggerDialog.setSize(250, 100);
-        deleteAllTriggerDialog.setLocationRelativeTo(CrudTestFrame.getFrame());
-        CrudTestFrame.addSubWindow(deleteAllTriggerDialog, CompornentName.DELETE_ALL_TRIGER_DIALOG);
+        // drop all object dialog
+        DeleteAllObjectDialog deleteAllObjectDialog = new DeleteAllObjectDialog(CrudTestFrame.getFrame(), l1, c1);
+        deleteAllObjectDialog.setTitle("Dialog");
+        deleteAllObjectDialog.setSize(350, 150);
+        deleteAllObjectDialog.setLocationRelativeTo(CrudTestFrame.getFrame());
+        CrudTestFrame.addSubWindow(deleteAllObjectDialog, CompornentName.DELETE_ALL_OBJECT_DIALOG);
 
         // print file dialog
         FileDialog fd = new FileDialog(CrudTestFrame.getFrame(), "出力ファイル選択", FileDialog.SAVE);
