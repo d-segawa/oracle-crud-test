@@ -14,14 +14,18 @@ public class CoreHelper {
     private static final HtmlPrintService htmlPrintService = new HtmlPrintService();
 
     public static void renewChoice(Choice c) {
+        c.removeAll();
         if (crudTestService.existsMngTable()) {
             List<String> tableList = crudTestService.selectCreatedTriggerTableName();
             if (tableList != null) {
-                c.removeAll();
                 tableList.forEach(t -> c.add(t));
 
             }
         }
+    }
+
+    public static int countData(List<String> tableList) {
+        return htmlPrintService.countData(tableList);
     }
 
     public static void truncateLogTable() {
@@ -41,6 +45,10 @@ public class CoreHelper {
             return new Result(message.isEmpty(), message);
         }
         return new Result(true, "");
+    }
+
+    public static void dropObject() {
+        crudTestService.dropObject();
     }
 
     public static void printHtml(List<String> targetTableName, Path filePath) {

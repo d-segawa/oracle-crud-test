@@ -33,6 +33,7 @@ public class CreateTriggerDialog extends java.awt.Dialog {
                 l1.setText(result.errorMessage);
             }
             CoreHelper.renewChoice(c1);
+            textField.setText("");
             setVisible(false);
         });
         b2.addActionListener(e -> {

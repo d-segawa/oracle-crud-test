@@ -8,7 +8,7 @@ import java.awt.TextField;
 
 import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
-import org.crudtest.frame.DeleteAllTriggerDialog;
+import org.crudtest.frame.DeleteAllObjectDialog;
 import org.crudtest.frame.DeleteLogDialog;
 import org.crudtest.frame.LayoutHelper;
 import org.crudtest.listener.CoreHelper;
@@ -35,21 +35,25 @@ public class LocateCompornent {
         // Choice
         Choice c1 = new Choice();
         CoreHelper.renewChoice(c1);
-        CrudTestFrame.addCompornent(c1, LayoutHelper.createGridBagConstraints(2, 0, 1, 1), CompornentName.CHOICE1);
+        CrudTestFrame.addCompornent(c1, LayoutHelper.createGridBagConstraints(2, 0, 1, 2), CompornentName.CHOICE1);
+
+        // Label
+        Label l2 = new Label();
+        CrudTestFrame.addCompornent(l2, LayoutHelper.createGridBagConstraints(3, 0, 1, 2), CompornentName.LABEL2);
 
         // prit data button
         Button b2 = new Button("Print");
-        CrudTestFrame.addCompornent(b2, LayoutHelper.createGridBagConstraints(2, 1, 1, 1),
+        CrudTestFrame.addCompornent(b2, LayoutHelper.createGridBagConstraints(4, 0, 1, 2),
                 CompornentName.OUTPUT_LOG_BUTTON);
 
         // delete all data button
         Button b3 = new Button("Clear");
-        CrudTestFrame.addCompornent(b3, LayoutHelper.createGridBagConstraints(3, 0, 1, 1),
+        CrudTestFrame.addCompornent(b3, LayoutHelper.createGridBagConstraints(5, 0, 1, 1),
                 CompornentName.DELETE_ALL_LOG_BUTTON);
 
-        // print button
+        // drop button
         Button b4 = new Button("Drop");
-        CrudTestFrame.addCompornent(b4, LayoutHelper.createGridBagConstraints(3, 1, 1, 1),
+        CrudTestFrame.addCompornent(b4, LayoutHelper.createGridBagConstraints(5, 1, 1, 1),
                 CompornentName.DELETE_ALL_TRIGER_BUTTON);
 
         // all delete log dialog
@@ -59,12 +63,12 @@ public class LocateCompornent {
         dl.setLocationRelativeTo(CrudTestFrame.getFrame());
         CrudTestFrame.addSubWindow(dl, CompornentName.DELETE_CONFIRM_DIALOG);
 
-        // drop all triger dialog
-        DeleteAllTriggerDialog deleteAllTriggerDialog = new DeleteAllTriggerDialog(CrudTestFrame.getFrame(), l1, c1);
-        deleteAllTriggerDialog.setTitle("Dialog");
-        deleteAllTriggerDialog.setSize(250, 100);
-        deleteAllTriggerDialog.setLocationRelativeTo(CrudTestFrame.getFrame());
-        CrudTestFrame.addSubWindow(deleteAllTriggerDialog, CompornentName.DELETE_ALL_TRIGER_DIALOG);
+        // drop all object dialog
+        DeleteAllObjectDialog deleteAllObjectDialog = new DeleteAllObjectDialog(CrudTestFrame.getFrame(), l1, c1);
+        deleteAllObjectDialog.setTitle("Dialog");
+        deleteAllObjectDialog.setSize(350, 150);
+        deleteAllObjectDialog.setLocationRelativeTo(CrudTestFrame.getFrame());
+        CrudTestFrame.addSubWindow(deleteAllObjectDialog, CompornentName.DELETE_ALL_OBJECT_DIALOG);
 
         // print file dialog
         FileDialog fd = new FileDialog(CrudTestFrame.getFrame(), "出力ファイル選択", FileDialog.SAVE);

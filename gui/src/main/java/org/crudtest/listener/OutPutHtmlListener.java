@@ -34,12 +34,7 @@ public class OutPutHtmlListener implements ActionListener {
             if (validate(choice, fileDialog, label)) {
                 Path filePath = Paths.get(fileDialog.getDirectory(), fileDialog.getFile());
 
-                int count = choice.getItemCount();
-                List<String> items = new ArrayList<>();
-                for (int i = 0; i < count; i++) {
-                    items.add(choice.getItem(i));
-                }
-                CoreHelper.printHtml(items, filePath);
+                CoreHelper.printHtml(getItemList(), filePath);
             }
         } catch (Exception ex) {
             label.setText(ex.getMessage());
@@ -49,6 +44,12 @@ public class OutPutHtmlListener implements ActionListener {
     boolean validate(Choice choice, FileDialog fileDialog, Label label) {
         if (choice.getSelectedItem() == null || choice.getSelectedItem().isEmpty()) {
             label.setText("トリガーがありません。");
+            return false;
+        }
+
+        int count = CoreHelper.countData(getItemList());
+        if (count <= 0) {
+            label.setText("出力するデータがありません。");
             return false;
         }
 
@@ -62,6 +63,15 @@ public class OutPutHtmlListener implements ActionListener {
         }
 
         return true;
+    }
+
+    List<String> getItemList() {
+        int count = choice.getItemCount();
+        List<String> items = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            items.add(choice.getItem(i));
+        }
+        return items;
     }
 
     String formattedSysDate() {

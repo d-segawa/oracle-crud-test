@@ -99,7 +99,7 @@ public class CrudTestService {
 
         for (String trigger : allTriggerNames) {
             try {
-                oracleRepository.executeDdl(DDL.createDropTrigger(trigger));
+                oracleRepository.executeDdl(DDL.dropTrigger(trigger));
             } catch (JdbcException je) {
                 if (je.getCause() instanceof SQLException) {
                     SQLException se = (SQLException) je.getCause();
@@ -150,6 +150,16 @@ public class CrudTestService {
         }
     }
 
+    public void dropObject() {
+        try {
+            dropLogSequence();
+            dropLogTable();
+            dropMangageTable();
+        } catch (JdbcException e) {
+            log.error("Error occured drop db object", e);
+        }
+    }
+
     protected void createTrigger(String tableName) throws JdbcException {
 
         MetaTableInfo metaTableInfo = DbUtil.getMetaData(
@@ -190,9 +200,28 @@ public class CrudTestService {
         }
     }
 
-    @Deprecated
-    protected int deleteLogsTable(String tableName) throws JdbcException {
-        return oracleRepository.deleteLog(LOG_TABLE_NAME, tableName);
+
+    protected void dropLogSequence() throws JdbcException {
+        if (oracleRepository.existsSequence(LOG_TABLE_SEQ_NAME)) {
+            String createdDdl = DDL.dropSequence(LOG_TABLE_SEQ_NAME);
+            oracleRepository.executeDdl(createdDdl);
+        }
+    }
+
+    protected void dropLogTable() throws JdbcException {
+        if (oracleRepository.existsTable(LOG_TABLE_NAME)) {
+            String createdDdl = DDL
+                    .dropTable(LOG_TABLE_NAME);
+            oracleRepository.executeDdl(createdDdl);
+        }
+    }
+
+    protected void dropMangageTable() throws JdbcException {
+        if (oracleRepository.existsTable(MANAGE_TABLE_NAME)) {
+            String createdDdl = DDL
+                    .dropTable(MANAGE_TABLE_NAME);
+            oracleRepository.executeDdl(createdDdl);
+        }
     }
 
 }

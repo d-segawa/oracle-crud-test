@@ -31,12 +31,13 @@ public class HtmlPrintService {
     }
 
     public void printMultiTable(List<String> tableList, Path filePath) {
-        List<String> lines = new ArrayList<>();
-
         try {
-            for (String table : tableList) {
-                lines.addAll(print(table));
-            }
+            List<String> lines = new ArrayList<>();
+            lines.addAll(createListData(tableList));
+            lines.add("<div class=\"tab-content\">");
+            lines.addAll(creataTableData(tableList));
+            lines.add("</div>");
+
 
             List<String> templateLines = IOUtil.readTemplateAllLine("template.html");
 
@@ -58,23 +59,70 @@ public class HtmlPrintService {
         }
     }
 
-    List<String> print(String targetTableName) throws CrudTestException {
-        List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
-        List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
+    public int countData(List<String> tableList) {
+        try {
+            int count = 0;
+            if (repo.existsTable(LOGS_TABLE_NAME)) {
+                for (String targetTableName : tableList) {
+                    count += repo.selectLog(LOGS_TABLE_NAME, targetTableName).size();
+                }
+            }
+            return count;
+        } catch (CrudTestException e) {
+            log.error("Error occured print html count data.", e);
+            throw new RuntimeException(e);
+        }
+    }
 
-        List<String> lines = IOUtil.readTemplateAllLine("table-template.html");
+    List<String> createListData(List<String> targetTableNameList) throws CrudTestException {
+        List<String> listData = new ArrayList<String>();
+        listData.add("<ul class=\"nav nav-tabs\">");
+        for (String tableName : targetTableNameList) {
+            if (listData.size() == 1) {
+                listData.add(String.format(
+                        "<li class=\"nav-item\"><a href=\"#%1$s\" class=\"nav-link active\" data-toggle=\"tab\">%1$s</a></li>",
+                        tableName));
+            } else {
+                listData.add(String.format(
+                        "<li class=\"nav-item\"><a href=\"#%1$s\" class=\"nav-link\" data-toggle=\"tab\">%1$s</a></li>",
+                        tableName));
+            }
+        }
+        listData.add("</ul>");
+        return listData;
+    }
 
-        String thead1 = createTHeadFirst(recoredList);
-        String thead2 = createTHeadSecond(recoredList);
-        String tbody = createTBody(recoredList);
+    List<String> creataTableData(List<String> targetTableNameList) throws CrudTestException {
+        List<String> outPutTableHtmlList = new ArrayList<String>();
 
-        // replace
-        lines.replaceAll(line -> {
-            return line.replace("${TABLE_NAME}", targetTableName).replace("${THEAD1}", thead1)
-                    .replace("${THEAD2}", thead2)
-                    .replace("${TBODY}", tbody);
-        });
-        return lines;
+        for(String targetTableName : targetTableNameList) {
+            if (outPutTableHtmlList.size() == 0) {
+                outPutTableHtmlList.add(String.format("<div id=\"%1$s\" class=\"tab-pane active\">", targetTableName));
+            } else {
+                outPutTableHtmlList.add(String.format("<div id=\"%1$s\" class=\"tab-pane\">", targetTableName));
+            }
+
+            List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
+            List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
+
+            List<String> lines = IOUtil.readTemplateAllLine("table-template.html");
+
+            String thead1 = createTHeadFirst(recoredList);
+            String thead2 = createTHeadSecond(recoredList);
+            String tbody = createTBody(recoredList);
+
+            // replace
+            lines.replaceAll(line -> {
+                return line.replace("${THEAD1}", thead1)
+                        .replace("${THEAD2}", thead2)
+                        .replace("${TBODY}", tbody);
+            });
+
+            outPutTableHtmlList.addAll(lines);
+            outPutTableHtmlList.add("</div>");
+        }
+
+        return outPutTableHtmlList;
     }
 
     String createTHeadFirst(List<LogRecoredBean> recoredList) {

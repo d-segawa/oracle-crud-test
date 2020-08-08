@@ -7,7 +7,7 @@ import java.awt.TextField;
 
 import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
-import org.crudtest.frame.DeleteAllTriggerDialog;
+import org.crudtest.frame.DeleteAllObjectDialog;
 import org.crudtest.frame.DeleteLogDialog;
 import org.crudtest.listener.CoreHelper;
 import org.crudtest.listener.OutPutHtmlListener;
@@ -54,12 +54,12 @@ public class AssociateEvent {
             dl.setVisible(true);
         });
 
-        // トリガー削除
-        DeleteAllTriggerDialog deleteAllTriggerDialog = CrudTestFrame.getSubwindow(
-                CompornentName.DELETE_ALL_TRIGER_DIALOG,
-                DeleteAllTriggerDialog.class);
+        // トリガー,オブジェクト削除
+        DeleteAllObjectDialog deleteAllObjectDialog = CrudTestFrame.getSubwindow(
+                CompornentName.DELETE_ALL_OBJECT_DIALOG,
+                DeleteAllObjectDialog.class);
         CrudTestFrame.setListener(CompornentName.DELETE_ALL_TRIGER_BUTTON, e -> {
-            deleteAllTriggerDialog.setVisible(true);
+            deleteAllObjectDialog.setVisible(true);
         });
 
     }
@@ -75,5 +75,6 @@ public class AssociateEvent {
         }
 
         CoreHelper.renewChoice(c1);
+        textField.setText("");
     }
 }

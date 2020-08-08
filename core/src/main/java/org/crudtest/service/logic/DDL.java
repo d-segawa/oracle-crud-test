@@ -10,6 +10,10 @@ public class DDL {
 
     private static final String DROP_TRIGGER = "DROP TRIGGER %1$s";
 
+    private static final String DROP_SEQUENCE = "DROP SEQUENCE %1$s";
+
+    private static final String DROP_TABLE = "DROP TABLE %1$s";
+
     public static String createSeq(String seqName) {
         return String.format(SEQ_STATEMENTS, seqName);
     }
@@ -22,7 +26,16 @@ public class DDL {
         return String.format(TRIGGER_MNG_T, tableName, tableName);
     }
 
-    public static String createDropTrigger(String triggerName) {
+    public static String dropTrigger(String triggerName) {
         return String.format(DROP_TRIGGER, triggerName);
     }
+
+    public static String dropSequence(String seqName) {
+        return String.format(DROP_SEQUENCE, seqName);
+    }
+
+    public static String dropTable(String tableName) {
+        return String.format(DROP_TABLE, tableName);
+    }
+
 }
