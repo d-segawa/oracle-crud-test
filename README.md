@@ -7,7 +7,7 @@
 - Oracle 11g+
 
 ## 使い方
-- [リリース](https://github.com/d-segawa/oracle-crud-test/releases) -> Assets ->crud-test.zipをダウンロード・解凍
+- [リリース](https://github.com/d-segawa/oracle-crud-test/releases) -> Assets -> crud-test.zip をダウンロード・解凍
 
 
 - start.batを環境に合わせて変更
