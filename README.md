@@ -23,6 +23,3 @@ set DB_CHARSET=SJIS
 
 ```
 - start.batを実行
-
-## 処理イメージ
-<img src="https://github.com/d-segawa/oracle-crud-test/blob/images/image/object.png" width=80% />
