@@ -71,4 +71,5 @@ public class CrudTestFrame {
     public static Frame getFrame() {
         return frame;
     }
+
 }

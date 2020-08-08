@@ -37,6 +37,10 @@ public class LocateCompornent {
         CoreHelper.renewChoice(c1);
         CrudTestFrame.addCompornent(c1, LayoutHelper.createGridBagConstraints(2, 0, 1, 2), CompornentName.CHOICE1);
 
+        // Label
+        Label l2 = new Label();
+        CrudTestFrame.addCompornent(l2, LayoutHelper.createGridBagConstraints(3, 0, 1, 2), CompornentName.LABEL2);
+
         // prit data button
         Button b2 = new Button("Print");
         CrudTestFrame.addCompornent(b2, LayoutHelper.createGridBagConstraints(4, 0, 1, 2),
