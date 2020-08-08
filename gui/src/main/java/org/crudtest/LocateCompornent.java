@@ -35,21 +35,21 @@ public class LocateCompornent {
         // Choice
         Choice c1 = new Choice();
         CoreHelper.renewChoice(c1);
-        CrudTestFrame.addCompornent(c1, LayoutHelper.createGridBagConstraints(2, 0, 1, 1), CompornentName.CHOICE1);
+        CrudTestFrame.addCompornent(c1, LayoutHelper.createGridBagConstraints(2, 0, 1, 2), CompornentName.CHOICE1);
 
         // prit data button
         Button b2 = new Button("Print");
-        CrudTestFrame.addCompornent(b2, LayoutHelper.createGridBagConstraints(2, 1, 1, 1),
+        CrudTestFrame.addCompornent(b2, LayoutHelper.createGridBagConstraints(4, 0, 1, 2),
                 CompornentName.OUTPUT_LOG_BUTTON);
 
         // delete all data button
         Button b3 = new Button("Clear");
-        CrudTestFrame.addCompornent(b3, LayoutHelper.createGridBagConstraints(3, 0, 1, 1),
+        CrudTestFrame.addCompornent(b3, LayoutHelper.createGridBagConstraints(5, 0, 1, 1),
                 CompornentName.DELETE_ALL_LOG_BUTTON);
 
-        // print button
+        // drop button
         Button b4 = new Button("Drop");
-        CrudTestFrame.addCompornent(b4, LayoutHelper.createGridBagConstraints(3, 1, 1, 1),
+        CrudTestFrame.addCompornent(b4, LayoutHelper.createGridBagConstraints(5, 1, 1, 1),
                 CompornentName.DELETE_ALL_TRIGER_BUTTON);
 
         // all delete log dialog
