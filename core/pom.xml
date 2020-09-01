@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.crudtest</groupId>
         <artifactId>oracle-crud-test</artifactId>
-        <version>1.1.0</version>
+        <version>1.2.0</version>
     </parent>
 
     <properties>
@@ -22,6 +22,49 @@
             <systemPath>${project.basedir}/oracle/ojdbc7.jar</systemPath>
             <scope>system</scope>
         </dependency>
+        <dependency>
+            <groupId>apache.commons</groupId>
+            <artifactId>commons.xmlbeans</artifactId>
+            <version>3.1.0</version>
+            <systemPath>${project.basedir}/poi/xmlbeans-3.1.0.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>apache.commons</groupId>
+            <artifactId>commons.collections4</artifactId>
+            <version>4.4</version>
+            <systemPath>${project.basedir}/poi/commons-collections4-4.4.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>apache.commons</groupId>
+            <artifactId>commons.compress</artifactId>
+            <version>1.19</version>
+            <systemPath>${project.basedir}/poi/commons-compress-1.19.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>apache.commons</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+            <systemPath>${project.basedir}/poi/poi-4.1.2.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>apache.commons</groupId>
+            <artifactId>poi.ooxml</artifactId>
+            <version>4.1.2</version>
+            <systemPath>${project.basedir}/poi/poi-ooxml-4.1.2.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+        <dependency>
+            <groupId>apache.commons</groupId>
+            <artifactId>poi.ooxml.schemas</artifactId>
+            <version>4.1.2</version>
+            <systemPath>${project.basedir}/poi/poi-ooxml-schemas-4.1.2.jar</systemPath>
+            <scope>system</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
