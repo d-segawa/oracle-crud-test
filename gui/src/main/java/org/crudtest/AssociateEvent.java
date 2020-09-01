@@ -9,7 +9,6 @@ import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
 import org.crudtest.frame.DeleteAllObjectDialog;
 import org.crudtest.frame.DeleteLogDialog;
-import org.crudtest.listener.CoreHelper;
 import org.crudtest.listener.OutPutHtmlListener;
 
 public class AssociateEvent {
@@ -68,7 +67,7 @@ public class AssociateEvent {
         label.setText("");
 
         String text = textField.getText();
-        org.crudtest.listener.CoreHelper.Result result = CoreHelper.createTrigger(text);
+        org.crudtest.CoreHelper.Result result = CoreHelper.createTrigger(text);
         if (result.result) {
         } else {
             label.setText(result.errorMessage);

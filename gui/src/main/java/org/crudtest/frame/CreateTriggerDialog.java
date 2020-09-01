@@ -6,7 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Label;
 import java.awt.TextField;
 
-import org.crudtest.listener.CoreHelper;
+import org.crudtest.CoreHelper;
 
 public class CreateTriggerDialog extends java.awt.Dialog {
 
@@ -27,7 +27,7 @@ public class CreateTriggerDialog extends java.awt.Dialog {
         b1.addActionListener(e -> {
             l1.setText("");
             String text = textField.getText();
-            org.crudtest.listener.CoreHelper.Result result = CoreHelper.createTrigger(text);
+            org.crudtest.CoreHelper.Result result = CoreHelper.createTrigger(text);
             if (result.result) {
             } else {
                 l1.setText(result.errorMessage);

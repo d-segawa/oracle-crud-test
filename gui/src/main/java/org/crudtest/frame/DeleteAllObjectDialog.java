@@ -5,7 +5,7 @@ import java.awt.Choice;
 import java.awt.GridBagLayout;
 import java.awt.Label;
 
-import org.crudtest.listener.CoreHelper;
+import org.crudtest.CoreHelper;
 
 public class DeleteAllObjectDialog extends java.awt.Dialog {
 

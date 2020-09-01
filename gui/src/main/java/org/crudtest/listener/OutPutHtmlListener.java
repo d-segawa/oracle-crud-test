@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.crudtest.CoreHelper;
+
 public class OutPutHtmlListener implements ActionListener {
 
     Choice choice;
@@ -35,7 +37,9 @@ public class OutPutHtmlListener implements ActionListener {
                 Path filePath = Paths.get(fileDialog.getDirectory(), fileDialog.getFile());
 
                 List<String> tableList = getItemList();
-                CoreHelper.printHtml(tableList, filePath);
+                // TODO
+//                CoreHelper.printHtml(tableList, filePath);
+                CoreHelper.printExcel(tableList, filePath);
                 CoreHelper.deleteData(tableList);
             }
         } catch (Exception ex) {
@@ -55,7 +59,10 @@ public class OutPutHtmlListener implements ActionListener {
             return false;
         }
 
-        String fileName = String.format("%s_%s.html", "CRUD", formattedSysDate());
+        // TODO
+//        String fileName = String.format("%s_%s.html", "CRUD", formattedSysDate());
+        String fileName = String.format("%s_%s.xlsx", "CRUD", formattedSysDate());
+
         fileDialog.setFile(fileName);
         fileDialog.setVisible(true);
 

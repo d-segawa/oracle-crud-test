@@ -11,7 +11,6 @@ import org.crudtest.frame.CrudTestFrame;
 import org.crudtest.frame.DeleteAllObjectDialog;
 import org.crudtest.frame.DeleteLogDialog;
 import org.crudtest.frame.LayoutHelper;
-import org.crudtest.listener.CoreHelper;
 
 public class LocateCompornent {
 
