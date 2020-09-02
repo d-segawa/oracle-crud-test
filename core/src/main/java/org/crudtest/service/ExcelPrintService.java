@@ -81,6 +81,7 @@ public class ExcelPrintService {
 
         book.moveCell(startRowIndex, startColIndex).setHeaderStyle();
         book.moveCell(startRowIndex + 1, startColIndex).setHeaderStyle();
+        book.cellUnion(startRowIndex, startRowIndex + 1, startColIndex, startColIndex);
 
         boolean isSkip = false;
         int rowIndex = startRowIndex;

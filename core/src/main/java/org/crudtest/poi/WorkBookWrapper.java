@@ -11,8 +11,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.xssf.streaming.SXSSFSheet;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class WorkBookWrapper implements Closeable {
 
@@ -23,12 +22,13 @@ public class WorkBookWrapper implements Closeable {
     private int sheetIndex = 0;
 
     public WorkBookWrapper() {
-        this.book = new SXSSFWorkbook();
+//        this.book = new SXSSFWorkbook();
+        this.book = new XSSFWorkbook();
     }
 
     public void createSheet(String sheetName) {
         Sheet sheet = book.createSheet(sheetName);
-        ((SXSSFSheet) sheet).trackAllColumnsForAutoSizing();
+//        ((XSSFSheet) sheet).trackAllColumnsForAutoSizing();
         this.sheets.add(sheet);
         sheetIndex++;
     }
