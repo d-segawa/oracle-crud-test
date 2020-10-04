@@ -3,6 +3,7 @@ package org.crudtest.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.crudtest.exception.JdbcException;
 import org.crudtest.log.AppLogger;
@@ -75,11 +76,7 @@ public class CrudTestService {
         try {
             return oracleRepository.selectAllTriggerName(MANAGE_TABLE_NAME).stream().map(triggerName -> {
                 return triggerName.substring(TRIGGER_PRIFIX.length());
-            }).collect(() -> new ArrayList<String>(), (list, name) -> {
-                list.add(name);
-            }, (list1, list2) -> {
-                list1.addAll(list2);
-            });
+            }).collect(Collectors.toList());
         } catch (Exception e) {
             log.error("Error occured select all trigger.", e);
             return new ArrayList<>();
@@ -208,7 +205,6 @@ public class CrudTestService {
             oracleRepository.executeDdl(createdDdl);
         }
     }
-
 
     protected void dropLogSequence() throws JdbcException {
         if (oracleRepository.existsSequence(LOG_TABLE_SEQ_NAME)) {

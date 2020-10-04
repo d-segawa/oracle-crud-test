@@ -12,9 +12,6 @@ set CURRENT=%~dp0
 set MAIN=org.crudtest.Start
 set LOG_FILE=%CURRENT%\app.log
 set LOG_LEVEL=WARN
-set JAR1=core-1.1.0.jar
-set JAR2=ojdbc7.jar
-set JAR3=gui-1.1.0.jar
 
 set OPTS=-Ddatabase.url=%DB_URL%^
  -Ddatabase.user=%DB_USER%^
@@ -23,7 +20,7 @@ set OPTS=-Ddatabase.url=%DB_URL%^
  -Dlogfile.path=%LOG_FILE%^
  -Dlog.level=%LOG_LEVEL%
 
-set CLASS_PATH=%CURRENT%\%JAR1%;%CURRENT%\%JAR2%;%CURRENT%\%JAR3%
+set CLASS_PATH=%CURRENT%\lib\*
 
 cd %CURRENT%
 start /b "" "%JAVA_HOME%\bin\javaw.exe" %JAVA_OPTS% %OPTS% -cp %CLASS_PATH% %MAIN%
