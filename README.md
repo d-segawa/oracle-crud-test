@@ -1,6 +1,6 @@
 # oracle-crud-test
 
-テーブルのINSERT、UPDATE、DELETEの履歴をファイルに出力
+テーブルのINSERT、UPDATE、DELETEの履歴をEXCELファイルに出力
 
 ## 環境
 - Java SE8+
