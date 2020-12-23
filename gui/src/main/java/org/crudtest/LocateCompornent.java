@@ -4,7 +4,7 @@ import java.awt.Button;
 import java.awt.Choice;
 import java.awt.FileDialog;
 import java.awt.Label;
-import java.awt.TextField;
+import java.awt.TextArea;
 
 import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
@@ -22,8 +22,9 @@ public class LocateCompornent {
         CrudTestFrame.addCompornent(l1, LayoutHelper.createGridBagConstraints(0, 0, 1, 2), CompornentName.LABEL1);
 
         // Text
-        TextField t1 = new TextField();
+        TextArea t1 = new TextArea();
         t1.setColumns(30);
+        t1.setRows(3);
         CrudTestFrame.addCompornent(t1, LayoutHelper.createGridBagConstraints(1, 0, 1, 1), CompornentName.TEXT1);
 
         // Create trigger button

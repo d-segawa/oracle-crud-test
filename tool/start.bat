@@ -7,7 +7,7 @@ set DB_PASS=pass
 set DB_CHARSET=SJIS
 
 
-set JAVA_OPTS=-Xms32M -Xmx64M
+set JAVA_OPTS=-Xms64M -Xmx64M
 set CURRENT=%~dp0
 set MAIN=org.crudtest.Start
 set LOG_FILE=%CURRENT%\app.log
@@ -23,7 +23,7 @@ set OPTS=-Ddatabase.url=%DB_URL%^
 set CLASS_PATH=%CURRENT%\lib\*
 
 cd %CURRENT%
-start /b "" "%JAVA_HOME%\bin\javaw.exe" %JAVA_OPTS% %OPTS% -cp %CLASS_PATH% %MAIN%
+start /b "" ""%JAVA_HOME%\bin\javaw.exe"" %JAVA_OPTS% %OPTS% -cp %CLASS_PATH% %MAIN%
 
 endlocal
 exit

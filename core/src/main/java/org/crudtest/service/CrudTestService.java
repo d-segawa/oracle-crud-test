@@ -51,17 +51,19 @@ public class CrudTestService {
             String upperTableName = tableName.toUpperCase();
 
             List<String> allTriggerNames = oracleRepository.selectAllTriggerName(MANAGE_TABLE_NAME);
-            String triggerName = TRIGGER_PRIFIX + upperTableName;
 
-            if (allTriggerNames.contains(triggerName)) {
-                return "既に作成されています";
-
+            for (String tname : allTriggerNames) {
+                if (tname.endsWith(upperTableName)) {
+                    return "既に作成されています";
+                }
             }
+
             if (!existsTable(upperTableName)) {
                 return "存在しないテーブルが指定されました";
             }
 
             createTrigger(upperTableName);
+            String triggerName = TRIGGER_PRIFIX + upperTableName;
             oracleRepository.insertManageTable(triggerName);
 
         } catch (Exception e) {
