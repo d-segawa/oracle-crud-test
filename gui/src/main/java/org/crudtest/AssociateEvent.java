@@ -3,7 +3,7 @@ package org.crudtest;
 import java.awt.Choice;
 import java.awt.FileDialog;
 import java.awt.Label;
-import java.awt.TextField;
+import java.awt.TextArea;
 
 import org.crudtest.frame.CreateTriggerDialog;
 import org.crudtest.frame.CrudTestFrame;
@@ -14,7 +14,7 @@ import org.crudtest.listener.OutPutHtmlListener;
 public class AssociateEvent {
 
     public void assemble() {
-        TextField t1 = CrudTestFrame.getComponent(CompornentName.TEXT1, TextField.class);
+        TextArea t1 = CrudTestFrame.getComponent(CompornentName.TEXT1, TextArea.class);
         Label l1 = CrudTestFrame.getComponent(CompornentName.LABEL1, Label.class);
         Choice c1 = CrudTestFrame.getComponent(CompornentName.CHOICE1, Choice.class);
 
@@ -63,10 +63,10 @@ public class AssociateEvent {
 
     }
 
-    void createTrigger(Label label, TextField textField, Choice c1) {
+    void createTrigger(Label label, TextArea textArea, Choice c1) {
         label.setText("");
 
-        String text = textField.getText();
+        String text = textArea.getText();
         org.crudtest.CoreHelper.Result result = CoreHelper.createTrigger(text);
         if (result.result) {
         } else {
@@ -74,6 +74,6 @@ public class AssociateEvent {
         }
 
         CoreHelper.renewChoice(c1);
-        textField.setText("");
+        textArea.setText("");
     }
 }

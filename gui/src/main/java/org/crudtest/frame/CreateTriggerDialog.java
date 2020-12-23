@@ -4,20 +4,19 @@ import java.awt.Button;
 import java.awt.Choice;
 import java.awt.GridBagLayout;
 import java.awt.Label;
-import java.awt.TextField;
+import java.awt.TextArea;
 
 import org.crudtest.CoreHelper;
 
 public class CreateTriggerDialog extends java.awt.Dialog {
 
-    public CreateTriggerDialog(java.awt.Frame owner, Label l1, TextField textField, Choice c1) {
+    public CreateTriggerDialog(java.awt.Frame owner, Label l1, TextArea textArea, Choice c1) {
         super(owner, true);
 
         Label l2 = new Label();
         l2.setText("トリガーを作成しますか？");
         Label l3 = new Label();
         l3.setText("（管理用のテーブル、シーケンスも作成されます）");
-
 
         //Button
         Button b1 = new Button("Ok");
@@ -26,14 +25,20 @@ public class CreateTriggerDialog extends java.awt.Dialog {
         // action listner
         b1.addActionListener(e -> {
             l1.setText("");
-            String text = textField.getText();
-            org.crudtest.CoreHelper.Result result = CoreHelper.createTrigger(text);
-            if (result.result) {
-            } else {
-                l1.setText(result.errorMessage);
+            String text = textArea.getText();
+
+            String[] textRec = text.split("\\r?\\n");
+
+            for (String rec : textRec) {
+                org.crudtest.CoreHelper.Result result = CoreHelper.createTrigger(rec);
+                if (result.result) {
+                } else {
+                    l1.setText(l1.getText() + result.errorMessage);
+                }
             }
+
             CoreHelper.renewChoice(c1);
-            textField.setText("");
+            textArea.setText("");
             setVisible(false);
         });
         b2.addActionListener(e -> {

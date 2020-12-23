@@ -23,7 +23,7 @@ set OPTS=-Ddatabase.url=%DB_URL%^
 set CLASS_PATH=%CURRENT%\lib\*
 
 cd %CURRENT%
-start /b "" "%JAVA_HOME%\bin\javaw.exe" %JAVA_OPTS% %OPTS% -cp %CLASS_PATH% %MAIN%
+start /b "" ""%JAVA_HOME%\bin\javaw.exe"" %JAVA_OPTS% %OPTS% -cp %CLASS_PATH% %MAIN%
 
 endlocal
 exit
