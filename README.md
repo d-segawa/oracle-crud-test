@@ -3,7 +3,7 @@
 テーブルのINSERT、UPDATE、DELETEの履歴をEXCELファイルに出力
 
 ## 環境
-- Java SE8+
+- Java 8+
 - Oracle 11g+
 
 ## 使い方
