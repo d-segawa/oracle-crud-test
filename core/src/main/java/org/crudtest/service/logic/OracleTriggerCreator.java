@@ -16,7 +16,7 @@ public class OracleTriggerCreator {
 
     private static final String EXCEPTION = " EXCEPTION WHEN OTHERS THEN ";
 
-    private static final String INSERT_VALUES = " '%1$s:' || UTL_RAW.CAST_TO_VARCHAR2(UTL_ENCODE.BASE64_ENCODE(UTL_I18N.STRING_TO_RAW(NVL(%2$s, '<NULL>'))))";
+    private static final String INSERT_VALUES = "TO_CLOB( '%1$s:' ) || UTL_RAW.CAST_TO_VARCHAR2(UTL_ENCODE.BASE64_ENCODE(UTL_I18N.STRING_TO_RAW(NVL(%2$s, '<NULL>'))))";
 
     private static final String INSERTING = " IF INSERTING THEN %1$s END IF;";
 
