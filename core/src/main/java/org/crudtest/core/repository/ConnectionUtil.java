@@ -1,7 +1,4 @@
-package org.crudtest.core.util;
-
-import org.crudtest.core.datasource.ConnectionManager;
-import org.crudtest.core.datasource.OracleConnectionManager;
+package org.crudtest.core.repository;
 
 public class ConnectionUtil {
 

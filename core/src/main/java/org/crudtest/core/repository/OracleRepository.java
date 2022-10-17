@@ -15,7 +15,6 @@ import org.crudtest.core.repository.entity.LogTable;
 import org.crudtest.core.exception.JdbcException;
 import org.crudtest.core.log.AppLogger;
 import org.crudtest.core.util.DateUtil;
-import org.crudtest.core.util.DbUtil;
 
 public class OracleRepository {
 

@@ -17,7 +17,7 @@ public class DeleteLogDialog extends java.awt.Dialog {
         Label l2 = new Label();
         l2.setText("データを全て削除しますか？");
 
-        //Button
+        // Button
         Button b1 = new Button("Ok");
         Button b2 = new Button("Cancel");
 
