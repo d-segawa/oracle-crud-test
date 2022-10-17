@@ -1,4 +1,4 @@
-package org.crudtest.core.util;
+package org.crudtest.core.repository;
 
 import java.io.IOException;
 import java.sql.Connection;

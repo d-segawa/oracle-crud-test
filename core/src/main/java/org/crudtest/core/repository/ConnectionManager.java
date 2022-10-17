@@ -1,4 +1,4 @@
-package org.crudtest.core.datasource;
+package org.crudtest.core.repository;
 
 import java.sql.Connection;
 

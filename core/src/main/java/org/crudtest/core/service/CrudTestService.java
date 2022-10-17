@@ -12,7 +12,7 @@ import org.crudtest.core.service.bean.MetaTableInfo;
 import org.crudtest.core.service.logic.DDL;
 import org.crudtest.core.service.logic.OracleMetaDataCreator;
 import org.crudtest.core.service.logic.OracleTriggerCreator;
-import org.crudtest.core.util.DbUtil;
+import org.crudtest.core.repository.DbUtil;
 import org.crudtest.core.log.AppLogger;
 
 public class CrudTestService {
