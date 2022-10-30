@@ -6,4 +6,4 @@ orbs:
 workflows:
   jar-build:
     jobs:
-      - maven/test:
+      - maven/test
