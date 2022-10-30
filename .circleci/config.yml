@@ -7,4 +7,3 @@ workflows:
   jar-build:
     jobs:
       - maven/test:
-          command: 'clean package'
