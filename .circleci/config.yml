@@ -1,0 +1,10 @@
+version: 2.1
+
+orbs:
+  maven: circleci/maven@1.4.0
+
+workflows:
+  jar-build:
+    jobs:
+      - maven/test:
+          command:'clean package'
