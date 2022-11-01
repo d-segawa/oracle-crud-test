@@ -16,53 +16,39 @@
 
     <dependencies>
         <dependency>
-            <groupId>oracle.jdbc.OracleDriver</groupId>
-            <artifactId>oracle.driver</artifactId>
-            <version>1.0.0</version>
-            <systemPath>${project.basedir}/oracle/ojdbc7.jar</systemPath>
-            <scope>system</scope>
+            <groupId>com.oracle.ojdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>19.3.0.0</version>
         </dependency>
         <dependency>
-            <groupId>apache.commons</groupId>
-            <artifactId>commons.xmlbeans</artifactId>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
             <version>3.1.0</version>
-            <systemPath>${project.basedir}/poi/xmlbeans-3.1.0.jar</systemPath>
-            <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>apache.commons</groupId>
-            <artifactId>commons.collections4</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
-            <systemPath>${project.basedir}/poi/commons-collections4-4.4.jar</systemPath>
-            <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>apache.commons</groupId>
-            <artifactId>commons.compress</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
             <version>1.19</version>
-            <systemPath>${project.basedir}/poi/commons-compress-1.19.jar</systemPath>
-            <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>apache.commons</groupId>
+            <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
             <version>4.1.2</version>
-            <systemPath>${project.basedir}/poi/poi-4.1.2.jar</systemPath>
-            <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>apache.commons</groupId>
-            <artifactId>poi.ooxml</artifactId>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
             <version>4.1.2</version>
-            <systemPath>${project.basedir}/poi/poi-ooxml-4.1.2.jar</systemPath>
-            <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>apache.commons</groupId>
-            <artifactId>poi.ooxml.schemas</artifactId>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
             <version>4.1.2</version>
-            <systemPath>${project.basedir}/poi/poi-ooxml-schemas-4.1.2.jar</systemPath>
-            <scope>system</scope>
         </dependency>
 
         <dependency>
