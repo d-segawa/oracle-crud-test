@@ -1,6 +1,6 @@
 package org.crudtest.core.repository;
 
-import static org.crudtest.core.repository.SQL.*;
+import static org.crudtest.core.repository.SqlLiterals.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class OracleRepository {
 
     public boolean existsTable(String tableName) throws JdbcException {
 
-        Integer result = DbUtil.<Integer> execute(countTable_sql,
+        Integer result = DataBaseAssessor.<Integer> execute(countTable_sql,
 
                 ps -> ps.setString(1, tableName), rs -> {
                     Integer count = 0;
@@ -39,7 +39,7 @@ public class OracleRepository {
 
     public boolean existsSequence(String sequenceName) throws JdbcException {
 
-        Integer result = DbUtil.<Integer> execute(countSequence_sql,
+        Integer result = DataBaseAssessor.<Integer> execute(countSequence_sql,
 
                 ps -> ps.setString(1, sequenceName), rs -> {
 
@@ -54,12 +54,12 @@ public class OracleRepository {
     }
 
     public void executeDdl(String ddl) throws JdbcException {
-        DbUtil.<Object> execute(ddl, rs -> null);
+        DataBaseAssessor.<Object> execute(ddl, rs -> null);
     }
 
     public List<String> selectTableName(String triggerName) throws JdbcException {
 
-        return DbUtil.<List<String>> execute(selectTableName_sql, ps -> {
+        return DataBaseAssessor.<List<String>> execute(selectTableName_sql, ps -> {
             ps.setString(1, triggerName);
 
         }, rs -> {
@@ -76,7 +76,7 @@ public class OracleRepository {
 
     public List<String> selectAllTriggerName(String mngTableName) throws JdbcException {
 
-        return DbUtil.<List<String>> execute(String.format(selectTrigerName_sql, mngTableName), rs -> {
+        return DataBaseAssessor.<List<String>> execute(String.format(selectTrigerName_sql, mngTableName), rs -> {
 
             List<String> tableList = new ArrayList<>();
             while (rs.next()) {
@@ -92,7 +92,7 @@ public class OracleRepository {
 
         String sql = String.format(selectLog_sql, tableName);
 
-        List<LogTable> logsTables = DbUtil.<List<LogTable>> execute(sql,
+        List<LogTable> logsTables = DataBaseAssessor.<List<LogTable>> execute(sql,
 
                 ps -> {
                     ps.setString(1, targetTableName);
@@ -107,7 +107,7 @@ public class OracleRepository {
                         logs.setHistoryType(rs.getString("HISTORY_TYPE"));
                         logs.setTableName(rs.getString("TABLE_NAME"));
                         logs.setData(replaceCRLF(clobToString(rs.getClob("DATA"))));
-                        logs.setInserDate(DbUtil.sqlToLocalDateTime(rs.getDate("INSERT_DATE")).orElse(null));
+                        logs.setInserDate(DataBaseAssessor.sqlToLocalDateTime(rs.getDate("INSERT_DATE")).orElse(null));
                         log.info(logs.toString());
                         resultList.add(logs);
                     }
@@ -121,7 +121,7 @@ public class OracleRepository {
 
         String sql = String.format(deleteLog_sql, tableName);
 
-        return DbUtil.executeUpdate(sql, ps -> {
+        return DataBaseAssessor.executeUpdate(sql, ps -> {
             ps.setString(1, targetTableName);
         });
     }
@@ -134,7 +134,7 @@ public class OracleRepository {
 
         java.sql.Date sysdate = new java.sql.Date(System.currentTimeMillis());
 
-        return DbUtil.executeUpdate(sql, ps -> {
+        return DataBaseAssessor.executeUpdate(sql, ps -> {
             ps.setString(1, triggerName);
             ps.setDate(2, sysdate);
             ps.setDate(3, sysdate);
