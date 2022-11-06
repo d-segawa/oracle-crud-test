@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.crudtest.core.service.bean.MetaTableInfo;
-import org.crudtest.core.repository.DbUtil.DbMetaFunction;
+import org.crudtest.core.repository.DataBaseAssessor.DbMetaFunction;
 
 public class OracleMetaDataCreator {
 

@@ -1,18 +1,18 @@
-package org.crudtest.core.repository;
+package org.crudtest.core.repository.connection;
+
+import oracle.jdbc.pool.OracleDataSource;
+import org.crudtest.core.exception.JdbcException;
+import org.crudtest.core.properties.ApplicationProperties;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.crudtest.core.properties.ApplicationProperties;
-import org.crudtest.core.exception.JdbcException;
-
-import oracle.jdbc.pool.OracleDataSource;
-
-public class OracleConnectionManager implements ConnectionManager {
+public class OracleConnectionFactory implements ConnectionFactory {
 
     @Override
     public Connection getConnection() throws JdbcException {
-        try {
+
+        try{
             OracleDataSource dataSource = new OracleDataSource();
             dataSource.setURL(
                     ApplicationProperties.DB_URL.getValue());
@@ -24,5 +24,4 @@ public class OracleConnectionManager implements ConnectionManager {
             throw new JdbcException(se);
         }
     }
-
 }

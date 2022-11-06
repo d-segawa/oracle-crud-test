@@ -1,6 +1,6 @@
 package org.crudtest.core.repository;
 
-public class SQL {
+public class SqlLiterals {
 
     public static final String countTable_sql = "SELECT COUNT(*) FROM USER_TABLES WHERE TABLE_NAME = ?";
 

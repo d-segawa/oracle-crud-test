@@ -14,14 +14,15 @@ import java.util.Optional;
 
 import org.crudtest.core.exception.JdbcException;
 import org.crudtest.core.log.AppLogger;
+import org.crudtest.core.repository.connection.ConnectionFactory;
 
-public class DbUtil {
+public class DataBaseAssessor {
 
-    private static AppLogger log = AppLogger.getLogger(DbUtil.class);
+    private static AppLogger log = AppLogger.getLogger(DataBaseAssessor.class);
 
     public static <T> T getMetaData(DbMetaFunction<DatabaseMetaData, T> function) throws JdbcException {
 
-        try (Connection connection = ConnectionUtil.getManager().getConnection()) {
+        try (Connection connection = ConnectionFactory.create().getConnection()) {
 
             DatabaseMetaData metaData = connection.getMetaData();
             return function.apply(metaData);
@@ -34,7 +35,7 @@ public class DbUtil {
     public static <T> T execute(String sql, SqlConsumer sqlConsumer,
             ResultFunction<T> resultFunction) throws JdbcException {
 
-        try (Connection con = ConnectionUtil.getManager().getConnection()) {
+        try (Connection con = ConnectionFactory.create().getConnection()) {
             log.info("Execute sql : " + sql);
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -51,7 +52,7 @@ public class DbUtil {
     public static <T> T execute(String sql,
             ResultFunction<T> resultFunction) throws JdbcException {
 
-        try (Connection con = ConnectionUtil.getManager().getConnection()) {
+        try (Connection con = ConnectionFactory.create().getConnection()) {
             log.info("Execute sql : " + sql);
 
             Statement st = con.createStatement();
@@ -66,7 +67,7 @@ public class DbUtil {
 
     public static <T> int executeUpdate(String sql, SqlConsumer sqlConsumer) throws JdbcException {
 
-        try (Connection con = ConnectionUtil.getManager().getConnection()) {
+        try (Connection con = ConnectionFactory.create().getConnection()) {
             log.info("Execute sql : " + sql);
 
             PreparedStatement ps = con.prepareStatement(sql);
@@ -74,11 +75,11 @@ public class DbUtil {
 
             try {
                 int count = ps.executeUpdate();
-                DbUtil.commit(con);
+                DataBaseAssessor.commit(con);
                 return count;
 
             } catch (SQLException e) {
-                DbUtil.rollback(con);
+                DataBaseAssessor.rollback(con);
                 throw new JdbcException(e);
             }
         } catch (SQLException se) {

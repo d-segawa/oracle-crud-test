@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 
 import org.crudtest.core.exception.JdbcException;
 import org.crudtest.core.properties.ApplicationProperties;
+import org.crudtest.core.repository.DataBaseAssessor;
 import org.crudtest.core.repository.OracleRepository;
 import org.crudtest.core.service.bean.MetaTableInfo;
 import org.crudtest.core.service.logic.DDL;
 import org.crudtest.core.service.logic.OracleMetaDataCreator;
 import org.crudtest.core.service.logic.OracleTriggerCreator;
-import org.crudtest.core.repository.DbUtil;
 import org.crudtest.core.log.AppLogger;
 
 public class CrudTestService {
@@ -170,7 +170,7 @@ public class CrudTestService {
 
     protected void createTrigger(String tableName) throws JdbcException {
 
-        MetaTableInfo metaTableInfo = DbUtil.getMetaData(
+        MetaTableInfo metaTableInfo = DataBaseAssessor.getMetaData(
                 oracleMetaDataCreator.create(SCHEMA, tableName));
 
         String triggerName = TRIGGER_PRIFIX + tableName;
