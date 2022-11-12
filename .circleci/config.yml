@@ -23,7 +23,7 @@ jobs:
       #          path: target/surefire-reports
       - run:
             name: Compress Artifacts
-            command: mkdir -p crud-test/lib; cp -p ~/project/gui/target/*.jar crud-test/lib/;  cp -p ~/project/core/target/*.jar crud-test/lib/; cp -p ~/project/start.bat crud-test/lib/; zip -r crud-test crud-test/
+            command: mkdir -p crud-test/lib; cp -p ~/project/gui/target/*.jar crud-test/lib/;  cp -p ~/project/core/target/*.jar crud-test/lib/; cp -p ~/project/start.bat crud-test/; zip -r crud-test crud-test/
       - store_artifacts:
           path: crud-test.zip
 #      - store_artifacts:
