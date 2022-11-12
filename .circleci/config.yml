@@ -21,10 +21,17 @@ jobs:
             - ~/.m2/repository
       #      - store_test_results:
       #          path: target/surefire-reports
+      - run:
+            name: Compress Artifacts
+            command: zip crud-test ~/project/gui/target/*.jar ~/project/core/target/*.jar ~/project/start.bat
       - store_artifacts:
-          path: ~/project/gui/target/gui-1.3.1.jar
-      - store_artifacts:
-          path: ~/project/core/target/core-1.3.1.jar
+          path: crud-test.zip
+#      - store_artifacts:
+#          path: ~/project/gui/target/*.jar
+#      - store_artifacts:
+#          path: ~/project/core/target/*.jar
+#      - store_artifacts:
+#          path: ~/project/start.bat
 
 workflows:
   jar-build:
