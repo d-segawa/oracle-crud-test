@@ -4,6 +4,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -52,6 +53,8 @@ public class CellWrapper {
 
     private CellStyle headerStyle() {
         CellStyle header = book.createCellStyle();
+        DataFormat dataFormat = book.createDataFormat();
+        header.setDataFormat(dataFormat.getFormat("text"));
         header.setBorderBottom(BorderStyle.THIN);
         setBorder(header, BorderStyle.THIN);
         header.setFillForegroundColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
@@ -63,6 +66,8 @@ public class CellWrapper {
 
     private CellStyle textStyle() {
         CellStyle text = book.createCellStyle();
+        DataFormat dataFormat = book.createDataFormat();
+        text.setDataFormat(dataFormat.getFormat("text"));
         setBorder(text, BorderStyle.THIN);
         text.setVerticalAlignment(VerticalAlignment.TOP);
         text.setWrapText(true);
@@ -72,6 +77,8 @@ public class CellWrapper {
 
     private CellStyle textStyleNonBorder() {
         CellStyle text = book.createCellStyle();
+        DataFormat dataFormat = book.createDataFormat();
+        text.setDataFormat(dataFormat.getFormat("text"));
         text.setVerticalAlignment(VerticalAlignment.TOP);
         text.setWrapText(true);
         text.setFont(font(book));
