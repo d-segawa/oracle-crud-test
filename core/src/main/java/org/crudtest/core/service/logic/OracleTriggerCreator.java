@@ -8,23 +8,28 @@ import org.crudtest.core.service.bean.MetaTableInfo.ColumnInfo;
 
 public class OracleTriggerCreator {
 
-    private static final String HEADER = "CREATE OR REPLACE TRIGGER %1$s AFTER INSERT OR UPDATE OR DELETE ON %2$s FOR EACH ROW";
+    private static final String HEADER = "CREATE OR REPLACE TRIGGER %1$s"
+    		+ " AFTER INSERT OR UPDATE OR DELETE ON %2$s FOR EACH ROW";
 
-    private static final String INSERT_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE) VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), '%3$s', '%4$s','%5$s', %6$s, SYSDATE, '0');";
+    private static final String INSERT_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE)"
+    		+ " VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), "
+    		+ "'%3$s', '%4$s','%5$s', %6$s, SYSDATE, '0');";
 
-    private static final String INSERT_ERROR_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,ERROR_INFO) VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), '%3$s', '%4$s','%5$s', '%6$s', SYSDATE, '1',%7$s);";
+    private static final String INSERT_ERROR_SQL = "INSERT INTO %1$s "
+    		+ "(ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,ERROR_INFO)"
+    		+ " VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), "
+    		+ "'%3$s', '%4$s','%5$s', '%6$s', SYSDATE, '1',%7$s);";
 
     private static final String EXCEPTION = " EXCEPTION WHEN OTHERS THEN ";
 
-    private static final String INSERT_VALUES = "TO_CLOB( '%1$s:' ) || UTL_RAW.CAST_TO_VARCHAR2(UTL_ENCODE.BASE64_ENCODE(UTL_I18N.STRING_TO_RAW(NVL(%2$s, '<NULL>'))))";
+    private static final String INSERT_VALUES = "TO_CLOB( '%1$s:' ) || "
+    		+ "UTL_RAW.CAST_TO_VARCHAR2(UTL_ENCODE.BASE64_ENCODE(UTL_I18N.STRING_TO_RAW(NVL(%2$s, '<NULL>'))))";
 
     private static final String INSERTING = " IF INSERTING THEN %1$s END IF;";
 
     private static final String UPDATING = " IF UPDATING THEN %1$s %2$s END IF;";
 
     private static final String DELETING = " IF DELETING THEN %1$s END IF;";
-
-    private static final String LS = System.lineSeparator();
 
     final String triggerName;
 
@@ -37,19 +42,21 @@ public class OracleTriggerCreator {
 
     public String create(MetaTableInfo tableInfo) {
         validate(tableInfo);
+        String ls = System.lineSeparator();
+        
         StringBuilder sb = new StringBuilder();
         sb.append(createHeader(tableInfo.getTableName(), triggerName));
-        sb.append(LS);
+        sb.append(ls);
         sb.append(" BEGIN ");
-        sb.append(LS);
+        sb.append(ls);
         sb.append(createInserting(tableInfo));
-        sb.append(LS);
+        sb.append(ls);
         sb.append(createUpdating(tableInfo));
-        sb.append(LS);
+        sb.append(ls);
         sb.append(createDeleting(tableInfo));
-        sb.append(LS);
+        sb.append(ls);
         sb.append(createException(tableInfo));
-        sb.append(LS);
+        sb.append(ls);
         sb.append(" END;");
         return sb.toString();
     }
@@ -108,11 +115,12 @@ public class OracleTriggerCreator {
 
 
     String createNewInsertValues(MetaTableInfo ti) {
-
+    	
+    	String ls = System.lineSeparator();
         StringBuilder statement = ti.getColumnList().stream().collect(() -> new StringBuilder(), (sb, column) -> {
             if (sb.length() > 0) {
                 sb.append(" ||','|| ");
-                sb.append(LS);
+                sb.append(ls);
             }
             sb.append(String.format(INSERT_VALUES, column.getColumnName(), createNewValue(column)));
         }, (sb1, sb2) -> {
@@ -123,10 +131,11 @@ public class OracleTriggerCreator {
 
     String createOldInsertValues(MetaTableInfo ti) {
 
+    	String ls = System.lineSeparator();
         StringBuilder statement = ti.getColumnList().stream().collect(() -> new StringBuilder(), (sb, column) -> {
             if (sb.length() > 0) {
                 sb.append(" ||','|| ");
-                sb.append(LS);
+                sb.append(ls);
             }
             sb.append(String.format(INSERT_VALUES, column.getColumnName(), createOldValue(column)));
         }, (sb1, sb2) -> {
