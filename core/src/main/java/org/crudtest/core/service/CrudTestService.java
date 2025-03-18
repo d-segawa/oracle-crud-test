@@ -198,6 +198,10 @@ public class CrudTestService {
             String createdDdl = DDL
                     .createLogTable(LOG_TABLE_NAME);
             oracleRepository.executeDdl(createdDdl);
+
+            String indexDdl = DDL
+                    .createLogTableIndex(LOG_TABLE_NAME);
+            oracleRepository.executeDdl(indexDdl);
         }
     }
 

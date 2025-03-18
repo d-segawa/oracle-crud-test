@@ -11,6 +11,8 @@ public class DDL {
     		+ "REFELENCE_ID CHAR(17) NOT NULL, "
     		+ "CONSTRAINT %2$s_PK PRIMARY KEY (ID))";
 
+    private static final String INDEX_STATEMENTS = "CREATE INDEX %1$s ON %2$s (%3$s)";
+    		
     private static final String TRIGGER_MNG_T = "CREATE TABLE %1$s(ID CHAR(17) NOT NULL,"
     		+ "TRIGGER_NAME VARCHAR2(256) NOT NULL,INSERT_DATE DATE NOT NULL,UPDATE_DATE DATE NOT NULL,"
     		+ "DELETE_FLAG CHAR(1) NOT NULL,CONSTRAINT %2$s_PK PRIMARY KEY (ID))";
@@ -27,6 +29,10 @@ public class DDL {
 
     public static String createLogTable(String tableName) {
         return String.format(LOG_TABLE_STATEMENTS, tableName, tableName);
+    }
+
+	public static String createLogTableIndex(String tableName) {
+		return String.format(INDEX_STATEMENTS, tableName + "_IND", tableName, "REFELENCE_ID");
     }
 
     public static String createManagementTable(String tableName) {
