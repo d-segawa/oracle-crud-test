@@ -9,16 +9,23 @@ import org.crudtest.core.service.bean.MetaTableInfo.ColumnInfo;
 public class OracleTriggerCreator {
 
     private static final String HEADER = "CREATE OR REPLACE TRIGGER %1$s"
-    		+ " AFTER INSERT OR UPDATE OR DELETE ON %2$s FOR EACH ROW";
+    		+ " AFTER INSERT OR UPDATE OR DELETE ON %2$s FOR EACH ROW DECLARE ref_id CHAR(17);";
 
-    private static final String INSERT_SQL = "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE)"
-    		+ " VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), "
-    		+ "'%3$s', '%4$s','%5$s', %6$s, SYSDATE, '0');";
+    private static final String INSERT_SQL = "ref_id := TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'); "
+    		+ "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,REFELENCE_ID)"
+    		+ " VALUES (ref_id, "
+    		+ "'%3$s', '%4$s','%5$s', %6$s, SYSDATE, '0', ref_id);";
 
-    private static final String INSERT_ERROR_SQL = "INSERT INTO %1$s "
-    		+ "(ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,ERROR_INFO)"
-    		+ " VALUES (TO_CHAR(SYSDATE,'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), "
-    		+ "'%3$s', '%4$s','%5$s', '%6$s', SYSDATE, '1',%7$s);";
+    private static final String INSERT_NEW_SQL =
+    		 "INSERT INTO %1$s (ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,REFELENCE_ID)"
+    		+ " VALUES (TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'), "
+    		+ "'%3$s', '%4$s','%5$s', %6$s, SYSDATE, '0', ref_id);";
+
+    private static final String INSERT_ERROR_SQL = "ref_id := TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS') || TO_CHAR(%2$s.NEXTVAL, 'FM000'); "
+    		+ "INSERT INTO %1$s "
+    		+ "(ID,TABLE_NAME,CRUD_TYPE,HISTORY_TYPE,DATA,INSERT_DATE,RECODE_TYPE,ERROR_INFO,REFELENCE_ID)"
+    		+ " VALUES (ref_id, "
+    		+ "'%3$s', '%4$s','%5$s', '%6$s', SYSDATE, '1',%7$s, ref_id);";
 
     private static final String EXCEPTION = " EXCEPTION WHEN OTHERS THEN ";
 
@@ -86,10 +93,10 @@ public class OracleTriggerCreator {
                 ApplicationProperties.LOG_SEQ_NAME.getValue(),
                 tableInfo.getTableName(), "UPDATE", "OLD",
                 insertOldValues);
-        String insertNewValueSql = String.format(INSERT_SQL, logTableName,
-                ApplicationProperties.LOG_SEQ_NAME.getValue(),
-                tableInfo.getTableName(), "UPDATE", "NEW",
-                insertNewValues);
+		String insertNewValueSql = String.format(INSERT_NEW_SQL, logTableName,
+				ApplicationProperties.LOG_SEQ_NAME.getValue(),
+				tableInfo.getTableName(), "UPDATE", "NEW",
+				insertNewValues);
 
         return String.format(UPDATING, insertOldValueSql, insertNewValueSql);
     }
