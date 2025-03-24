@@ -3,17 +3,21 @@ package org.crudtest.core.service;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.crudtest.core.exception.CrudTestException;
 import org.crudtest.core.exception.JdbcException;
-import org.crudtest.core.properties.ApplicationProperties;
-import org.crudtest.core.repository.OracleRepository;
-import org.crudtest.core.repository.entity.LogTable;
-import org.crudtest.core.service.bean.LogRecoredBean;
-import org.crudtest.core.service.logic.DataConverter;
 import org.crudtest.core.log.AppLogger;
 import org.crudtest.core.poi.CellWrapper;
 import org.crudtest.core.poi.WorkBookWrapper;
+import org.crudtest.core.properties.ApplicationProperties;
+import org.crudtest.core.repository.OracleRepository;
+import org.crudtest.core.repository.SqlLiterals;
+import org.crudtest.core.repository.entity.LogTable;
+import org.crudtest.core.service.bean.LogRecoredBean;
+import org.crudtest.core.service.logic.DataConverter;
 
 public class ExcelPrintService {
 
@@ -31,6 +35,22 @@ public class ExcelPrintService {
     public ExcelPrintService() {
         this.repo = new OracleRepository();
         this.converter = new DataConverter();
+    }
+    public int countData(List<String> tableList) {
+        try {
+            int count = 0;
+            if (repo.existsTable(LOGS_TABLE_NAME)) {
+            	String sql = String.format(SqlLiterals.countLogTable_sql, LOGS_TABLE_NAME);
+
+                for (String targetTableName : tableList) {
+                    count += repo.countLog(sql, targetTableName);
+                }
+            }
+            return count;
+        } catch (CrudTestException e) {
+            log.error("Error occured print excel count data.", e);
+            throw new RuntimeException(e);
+        }
     }
 
     public void printMultiTable(List<String> tableList, Path filePath) {
@@ -54,8 +74,15 @@ public class ExcelPrintService {
 
         for (String targetTableName : tableList) {
 
-            List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
-            List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
+			List<LogTable> logsNonUpdateNewTableList = repo.selectLog(SqlLiterals.selectLogNonUpdateNew_sql, LOGS_TABLE_NAME,
+					targetTableName);
+			
+			Map<String, LogTable> logsUpdateNewTableMap = repo.selectNewUpdateLog(LOGS_TABLE_NAME, targetTableName);
+			
+			// merge
+			List<LogTable> mergedLogTables = mergeLogTables(logsNonUpdateNewTableList, logsUpdateNewTableMap);
+			
+			List<LogRecoredBean> recoredList = converter.converteList(mergedLogTables);
 
             book.createSheet(targetTableName);
 
@@ -76,6 +103,20 @@ public class ExcelPrintService {
 
     }
 
+	private List<LogTable> mergeLogTables(List<LogTable> logTables, Map<String, LogTable> newUpdates) {
+		List<LogTable> mergedLogTables = new ArrayList<>();
+
+		for (LogTable logTable : logTables) {
+			mergedLogTables.add(logTable);
+
+			if ("UPDATE".equals(logTable.getCrudType()) && "OLD".equals(logTable.getHistoryType())) {
+				LogTable newUpdate = newUpdates.get(logTable.getId());
+				mergedLogTables.add(newUpdate);
+			}
+		}
+		return mergedLogTables;
+	}
+    
     private void createHeader(WorkBookWrapper book, List<LogRecoredBean> recoredList) {
 
         book.moveCell(startRowIndex, startColIndex).setHeaderStyle();

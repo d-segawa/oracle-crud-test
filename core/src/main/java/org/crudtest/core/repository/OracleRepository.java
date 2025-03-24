@@ -1,19 +1,26 @@
 package org.crudtest.core.repository;
 
-import static org.crudtest.core.repository.SqlLiterals.*;
+import static org.crudtest.core.repository.SqlLiterals.countSequence_sql;
+import static org.crudtest.core.repository.SqlLiterals.countTable_sql;
+import static org.crudtest.core.repository.SqlLiterals.deleteLog_sql;
+import static org.crudtest.core.repository.SqlLiterals.insertManageTable_sql;
+import static org.crudtest.core.repository.SqlLiterals.selectTableName_sql;
+import static org.crudtest.core.repository.SqlLiterals.selectTrigerName_sql;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Clob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.crudtest.core.properties.ApplicationProperties;
-import org.crudtest.core.repository.entity.LogTable;
 import org.crudtest.core.exception.JdbcException;
 import org.crudtest.core.log.AppLogger;
+import org.crudtest.core.properties.ApplicationProperties;
+import org.crudtest.core.repository.entity.LogTable;
 import org.crudtest.core.util.DateUtil;
 
 public class OracleRepository {
@@ -87,10 +94,27 @@ public class OracleRepository {
 
         });
     }
+    public Integer countLog(String selectSql, String targetTableName) throws JdbcException {
 
-    public List<LogTable> selectLog(String tableName, String targetTableName) throws JdbcException {
+        Integer result = DataBaseAssessor.<Integer> execute(selectSql,
+                ps -> {
+                    ps.setString(1, targetTableName);
+                },
+                rs -> {
+                    Integer count = 0;
+                    if (rs.next()) {
+                        count = rs.getInt(1);
+                    }
+                    return count;
 
-        String sql = String.format(selectLog_sql, tableName);
+                });
+        return result;
+    }
+
+    
+    public List<LogTable> selectLog(String selectSql, String tableName, String targetTableName) throws JdbcException {
+
+        String sql = String.format(selectSql, tableName);
 
         List<LogTable> logsTables = DataBaseAssessor.<List<LogTable>> execute(sql,
 
@@ -108,6 +132,7 @@ public class OracleRepository {
                         logs.setTableName(rs.getString("TABLE_NAME"));
                         logs.setData(replaceCRLF(clobToString(rs.getClob("DATA"))));
                         logs.setInserDate(DataBaseAssessor.sqlToLocalDateTime(rs.getDate("INSERT_DATE")).orElse(null));
+                        logs.setRefelenceId(rs.getString("REFELENCE_ID"));
                         log.info(logs.toString());
                         resultList.add(logs);
                     }
@@ -116,6 +141,36 @@ public class OracleRepository {
                 });
         return logsTables;
     }
+
+	public Map<String, LogTable> selectNewUpdateLog(String tableName, String targetTableName) throws JdbcException {
+
+		String sql = String.format(SqlLiterals.selectLogUpdateNew_sql, tableName);
+
+		Map<String, LogTable> logsTables = DataBaseAssessor.<Map<String, LogTable>>execute(sql,
+
+				ps -> {
+					ps.setString(1, targetTableName);
+
+				}, rs -> {
+
+					Map<String, LogTable> resultMap = new HashMap<>();
+					while (rs.next()) {
+						LogTable logs = new LogTable();
+						logs.setId(rs.getString("ID"));
+						logs.setCrudType(rs.getString("CRUD_TYPE"));
+						logs.setHistoryType(rs.getString("HISTORY_TYPE"));
+						logs.setTableName(rs.getString("TABLE_NAME"));
+						logs.setData(replaceCRLF(clobToString(rs.getClob("DATA"))));
+						logs.setInserDate(DataBaseAssessor.sqlToLocalDateTime(rs.getDate("INSERT_DATE")).orElse(null));
+						logs.setRefelenceId(rs.getString("REFELENCE_ID"));
+						log.info(logs.toString());
+						resultMap.put(rs.getString("REFELENCE_ID"), logs);
+					}
+					return resultMap;
+
+				});
+		return logsTables;
+	}
 
     public int deleteLog(String tableName, String targetTableName) throws JdbcException {
 

@@ -7,12 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.crudtest.core.exception.CrudTestException;
+import org.crudtest.core.log.AppLogger;
 import org.crudtest.core.properties.ApplicationProperties;
 import org.crudtest.core.repository.OracleRepository;
+import org.crudtest.core.repository.SqlLiterals;
 import org.crudtest.core.repository.entity.LogTable;
 import org.crudtest.core.service.bean.LogRecoredBean;
 import org.crudtest.core.service.logic.DataConverter;
-import org.crudtest.core.log.AppLogger;
 import org.crudtest.core.util.IOUtil;
 
 public class HtmlPrintService {
@@ -64,7 +65,7 @@ public class HtmlPrintService {
             int count = 0;
             if (repo.existsTable(LOGS_TABLE_NAME)) {
                 for (String targetTableName : tableList) {
-                    count += repo.selectLog(LOGS_TABLE_NAME, targetTableName).size();
+                    count += repo.selectLog(SqlLiterals.selectLog_sql,LOGS_TABLE_NAME, targetTableName).size();
                 }
             }
             return count;
@@ -102,7 +103,7 @@ public class HtmlPrintService {
                 outPutTableHtmlList.add(String.format("<div id=\"%1$s\" class=\"tab-pane\">", targetTableName));
             }
 
-            List<LogTable> logsTableList = repo.selectLog(LOGS_TABLE_NAME, targetTableName);
+            List<LogTable> logsTableList = repo.selectLog(SqlLiterals.selectLog_sql,LOGS_TABLE_NAME, targetTableName);
             List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
 
             List<String> lines = IOUtil.readTemplateAllLine("table-template.html");

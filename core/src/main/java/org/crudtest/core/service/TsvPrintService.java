@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.crudtest.core.properties.ApplicationProperties;
 import org.crudtest.core.repository.OracleRepository;
+import org.crudtest.core.repository.SqlLiterals;
 import org.crudtest.core.repository.entity.LogTable;
 import org.crudtest.core.service.bean.LogRecoredBean;
 import org.crudtest.core.service.logic.DataConverter;
@@ -29,7 +30,7 @@ public class TsvPrintService {
 
     public void print(String targetTableName, Path filePath) {
         try {
-            List<LogTable> logsTableList = repo.selectLog(LOG_TABLE_NAME, targetTableName);
+            List<LogTable> logsTableList = repo.selectLog(SqlLiterals.selectLog_sql,LOG_TABLE_NAME, targetTableName);
             List<LogRecoredBean> recoredList = converter.converteList(logsTableList);
 
             List<String> tsvList = new ArrayList<>();
