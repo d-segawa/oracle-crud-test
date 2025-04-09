@@ -3,8 +3,24 @@ package org.crudtest.core.repository;
 public class SqlLiterals {
 
     public static final String countTable_sql = "SELECT COUNT(*) FROM USER_TABLES WHERE TABLE_NAME = ?";
-
+    
+    @Deprecated
     public static final String selectLog_sql = "SELECT ID, CRUD_TYPE, HISTORY_TYPE, TABLE_NAME, DATA, INSERT_DATE FROM %1$s WHERE TABLE_NAME = ? AND RECODE_TYPE = '0' ORDER BY ID";
+    
+    public static final String countLogTable_sql = "SELECT COUNT(*) FROM %1$s "
+    		+ "WHERE TABLE_NAME = ? AND RECODE_TYPE = '0'";
+
+    public static final String selectLogNonUpdateNew_sql = "SELECT ID, CRUD_TYPE, HISTORY_TYPE, TABLE_NAME, DATA, INSERT_DATE, REFELENCE_ID "
+    		+ "FROM %1$s "
+    		+ "WHERE TABLE_NAME = ? AND RECODE_TYPE = '0' "
+    		+ "AND CRUD_TYPE = 'INSERT' OR CRUD_TYPE = 'DELETE' OR (CRUD_TYPE = 'UPDATE' AND HISTORY_TYPE = 'OLD') "
+    		+ "ORDER BY ID";
+
+    public static final String selectLogUpdateNew_sql = "SELECT ID, CRUD_TYPE, HISTORY_TYPE, TABLE_NAME, DATA, INSERT_DATE, REFELENCE_ID "
+    		+ "FROM %1$s "
+    		+ "WHERE TABLE_NAME = ? AND RECODE_TYPE = '0' "
+    		+ "AND CRUD_TYPE = 'UPDATE' AND HISTORY_TYPE = 'NEW' "
+    		+ "ORDER BY ID";
 
     public static final String deleteLog_sql = "DELETE FROM %1$s WHERE TABLE_NAME = ? AND RECODE_TYPE = '0'";
 

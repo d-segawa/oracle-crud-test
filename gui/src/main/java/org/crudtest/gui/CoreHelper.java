@@ -28,7 +28,7 @@ public class CoreHelper {
     }
 
     public static int countData(List<String> tableList) {
-        return htmlPrintService.countData(tableList);
+        return excelPrintService.countData(tableList);
     }
 
     public static void deleteData(List<String> tableList) {

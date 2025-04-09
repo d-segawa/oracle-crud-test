@@ -15,8 +15,18 @@ public class LogTable {
     private String data;
 
     private LocalDateTime inserDate;
+    
+    private String refelenceId;
 
-    public String getId() {
+    public String getRefelenceId() {
+		return refelenceId;
+	}
+
+	public void setRefelenceId(String refelenceId) {
+		this.refelenceId = refelenceId;
+	}
+
+	public String getId() {
         return id;
     }
 
@@ -65,9 +75,9 @@ public class LogTable {
     }
 
     @Override
-    public String toString() {
-        return "LogsTable [id=" + id + ", tableName=" + tableName + ", crudType=" + crudType + ", historyType="
-                + historyType + ", data=" + data + ", inserDate=" + inserDate + "]";
-    }
+	public String toString() {
+		return "LogTable [id=" + id + ", tableName=" + tableName + ", crudType=" + crudType + ", historyType="
+				+ historyType + ", data=" + data + ", inserDate=" + inserDate + ", refelenceId=" + refelenceId + "]";
+	}
 
 }
