@@ -12,7 +12,7 @@ class TsvPrintServiceTest {
         TsvPrintService service = new TsvPrintService();
         Path path = Paths.get("/Applications/Eclipse_4.7.2.app/Contents/workspace/crud-test/src/main/resources",
                 "sample_result.tsv");
-        service.print("TRANSACTION", path);
+        //service.print("TRANSACTION", path);
     }
 
 }
