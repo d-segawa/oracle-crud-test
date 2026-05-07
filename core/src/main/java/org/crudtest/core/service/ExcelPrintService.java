@@ -40,7 +40,7 @@ public class ExcelPrintService {
         try {
             int count = 0;
             if (repo.existsTable(LOGS_TABLE_NAME)) {
-            	String sql = String.format(SqlLiterals.countLogTable_sql, LOGS_TABLE_NAME);
+                String sql = String.format(SqlLiterals.countLogTable_sql, LOGS_TABLE_NAME);
 
                 for (String targetTableName : tableList) {
                     count += repo.countLog(sql, targetTableName);
@@ -74,15 +74,17 @@ public class ExcelPrintService {
 
         for (String targetTableName : tableList) {
 
-			List<LogTable> logsNonUpdateNewTableList = repo.selectLog(SqlLiterals.selectLogNonUpdateNew_sql, LOGS_TABLE_NAME,
-					targetTableName);
-			
-			Map<String, LogTable> logsUpdateNewTableMap = repo.selectNewUpdateLog(LOGS_TABLE_NAME, targetTableName);
-			
-			// merge
-			List<LogTable> mergedLogTables = mergeLogTables(logsNonUpdateNewTableList, logsUpdateNewTableMap);
-			
-			List<LogRecoredBean> recoredList = converter.converteList(mergedLogTables);
+            // LOG_TABLEから、INSERT/DELETE/UPDATE(OLD)のデータを取得
+            List<LogTable> logsNonUpdateNewTableList = repo.selectLog(SqlLiterals.selectLogNonUpdateNew_sql, LOGS_TABLE_NAME,
+                    targetTableName);
+
+            // UPDATEのNEWのデータを取得
+            Map<String, LogTable> logsUpdateNewTableMap = repo.selectNewUpdateLog(LOGS_TABLE_NAME, targetTableName);
+
+            // merge
+            List<LogTable> mergedLogTables = mergeLogTables(logsNonUpdateNewTableList, logsUpdateNewTableMap);
+
+            List<LogRecoredBean> recoredList = converter.converteList(mergedLogTables);
 
             book.createSheet(targetTableName);
 
@@ -103,20 +105,20 @@ public class ExcelPrintService {
 
     }
 
-	private List<LogTable> mergeLogTables(List<LogTable> logTables, Map<String, LogTable> newUpdates) {
-		List<LogTable> mergedLogTables = new ArrayList<>();
+    private List<LogTable> mergeLogTables(List<LogTable> logTables, Map<String, LogTable> newUpdates) {
+        List<LogTable> mergedLogTables = new ArrayList<>();
 
-		for (LogTable logTable : logTables) {
-			mergedLogTables.add(logTable);
+        for (LogTable logTable : logTables) {
+            mergedLogTables.add(logTable);
 
-			if ("UPDATE".equals(logTable.getCrudType()) && "OLD".equals(logTable.getHistoryType())) {
-				LogTable newUpdate = newUpdates.get(logTable.getId());
-				mergedLogTables.add(newUpdate);
-			}
-		}
-		return mergedLogTables;
-	}
-    
+            if ("UPDATE".equals(logTable.getCrudType()) && "OLD".equals(logTable.getHistoryType())) {
+                LogTable newUpdate = newUpdates.get(logTable.getId());
+                mergedLogTables.add(newUpdate);
+            }
+        }
+        return mergedLogTables;
+    }
+
     private void createHeader(WorkBookWrapper book, List<LogRecoredBean> recoredList) {
 
         book.moveCell(startRowIndex, startColIndex).setHeaderStyle();
