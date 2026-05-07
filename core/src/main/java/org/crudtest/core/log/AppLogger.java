@@ -11,18 +11,21 @@ import org.crudtest.core.properties.ApplicationProperties;
 public class AppLogger {
 
     static final FileHandler fh;
+    static final Level appLevel;
 
     static {
         // TODO create Formatter
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS.%1$tL %4$s %2$s %5$s%6$s%n");
 
+        appLevel = changeLevel(ApplicationProperties.LOG_LEVEL.getValue());
+
         try {
 
             fh = new FileHandler(ApplicationProperties.LOG_PATH.getValue());
             SimpleFormatter sf = new SimpleFormatter();
             fh.setFormatter(sf);
-            fh.setLevel(changeLevel(ApplicationProperties.LOG_LEVEL.getValue()));
+            fh.setLevel(appLevel);
         } catch (IOException ie) {
             throw new RuntimeException(ie);
         }
@@ -49,6 +52,7 @@ public class AppLogger {
     <T> AppLogger(Class<T> clazz) {
         log = Logger.getLogger(clazz.getName());
         log.addHandler(fh);
+        log.setLevel(appLevel);
     }
 
     public static <T> AppLogger getLogger(Class<T> clazz) {
